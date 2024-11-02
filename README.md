@@ -1,4 +1,6 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Papers, please:: Cats Apocalypse
+
+Un joc asemanator cu Papers, Please doar ca pisicile au acaparat tara. Tu iei rolul unui ofiter pisica, desemnat sa determine cine are voie sa intre in tara pisicilor. Dar atentie!! Oamenii au ajuns sa se deghizeze mult prea bine in pisici, si este rolul tau sa detectezi pasapoartele false ale acestora.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
