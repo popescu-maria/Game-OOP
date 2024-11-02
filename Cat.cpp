@@ -3,7 +3,6 @@
 #include <random>
 
 #include "Cat.h"
-
 cat::cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes)
     :m_name(name), m_patterns(patterns), m_color(color), m_color_of_eyes(color_of_eyes)
 {

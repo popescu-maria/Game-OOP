@@ -1,6 +1,5 @@
 #include <sstream>
 #include "pasaport.h"
-
 pasaport::pasaport(int zi, int luna, int an, std::string& name, int age, char gender)
 : m_date{zi, luna, an}, m_name(name), m_age(age), m_gender(gender)
 {
