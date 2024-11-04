@@ -54,12 +54,12 @@ add_executable(${PROJECT_NAME}
     main.cpp
     generated/src/Helper.cpp
     env_fixes.h
-        Cat.cpp
-        Cat.h
-        pasaport.cpp
-        pasaport.h
-        game.cpp
-        game.h
+        Source/Cat.cpp
+        Headers/Cat.h
+        Source/Pasaport.cpp
+        Headers/Pasaport.h
+        Source/GameLogic.cpp
+        Headers/GameLogic.h
 )
 
 include(cmake/CompilerFlags.cmake)
