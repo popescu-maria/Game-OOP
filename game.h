@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Cat.h"
-#include "Pasaport.h"
+#include "pasaport.h"
 
 
 class game {

@@ -14,6 +14,8 @@ pasaport& pasaport::operator=(const pasaport& other) {
     m_date.zi = other.m_date.zi;
     m_date.luna = other.m_date.luna;
     m_date.an = other.m_date.an;
+    m_age = other.m_age;
+    m_gender = other.m_gender;
     return *this;
 }
 

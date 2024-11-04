@@ -18,7 +18,7 @@ private:
     pasaport m_pasaport;
 public:
 
-    cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes);
+    cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes, int age, char gender);
 
     cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes,
         const int& age, char gender);
