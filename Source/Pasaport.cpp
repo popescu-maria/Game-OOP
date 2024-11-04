@@ -1,7 +1,8 @@
 #include <sstream>
 #include "../Headers/Pasaport.h"
+
 pasaport::pasaport(int zi, int luna, int an, std::string& name, int age, char gender)
-: m_date{zi, luna, an}, m_name(name), m_age(age), m_gender(gender)
+    : m_date{zi, luna, an}, m_name(name), m_age(age), m_gender(gender)
 {
 }
 
@@ -10,7 +11,8 @@ pasaport::pasaport(const pasaport& other)
 {
 }
 
-pasaport& pasaport::operator=(const pasaport& other) {
+pasaport& pasaport::operator=(const pasaport& other)
+{
     m_date.zi = other.m_date.zi;
     m_date.luna = other.m_date.luna;
     m_date.an = other.m_date.an;
@@ -19,7 +21,8 @@ pasaport& pasaport::operator=(const pasaport& other) {
     return *this;
 }
 
-std::string pasaport::get_date() const {
+std::string pasaport::get_date() const
+{
     std::ostringstream date_stream;
     date_stream << m_date.zi << "/" << m_date.luna << "/" << m_date.an;
     return date_stream.str();
