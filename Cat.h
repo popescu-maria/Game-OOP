@@ -3,8 +3,6 @@
 #include <string>
 #include "pasaport.h"
 
-#include "pasaport.h"
-
 
 class cat
 {
@@ -17,11 +15,8 @@ private:
     char m_gender;
     pasaport m_pasaport;
 public:
-
-    cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes, int age, char gender);
-
-    cat(const std::string& name, const std::string& patterns, const std::string& color, const std::string& color_of_eyes,
-        const int& age, char gender);
+    cat(const std::string& name, const std::string& patterns, const std::string& color,
+        const std::string& color_of_eyes, int age, char gender);
 
     cat() { generateRandomCat(); }
 
