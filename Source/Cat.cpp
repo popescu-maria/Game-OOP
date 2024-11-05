@@ -4,8 +4,11 @@
 
 #include "../Headers/Cat.h"
 
-cat::cat(const std::string& name, const std::string& patterns, const std::string& color,
-         const std::string& color_of_eyes, int age, char gender)
+cat::cat(const std::string& name,
+    const std::string& patterns,
+    const std::string& color,
+    const std::string& color_of_eyes,
+    int age, char gender)
     : m_name(name), m_patterns(patterns),
       m_color(color), m_color_of_eyes(color_of_eyes), m_age(age), m_gender(gender)
 {
@@ -29,16 +32,10 @@ void cat::generateRandomCat()
     m_gender = (rand() % 2 == 0) ? 'M' : 'F'; // Random gender
 }
 
-// Display cat's details in the game interface
-
-//doar pentru vreificare, o sa dispara
-void cat::print_details() const
-{
-    std::cout << "Nume: " << m_name << "\n"
-        << "Patterns: " << m_patterns << "\n"
-        << "Color: " << m_color << "\n"
-        << "Eye Color: " << m_color_of_eyes << "\n"
-        << "Age: " << m_age << "\n"
-        << "Gender: " << m_gender << "\n"
-        << "Pasaport Expiry: " << m_pasaport.get_date() << "\n";
+std::ostream& operator<<(std::ostream& os, const cat& Cat) {
+    os << "Nume: " << Cat.m_name << "\nModel: " << Cat.m_patterns
+    << "\nCuloare: " << Cat.m_color << "\nCuloarea ochilor" << Cat.m_color_of_eyes
+    << "\nVarsta: " << Cat.m_age << "\nGenul: " << Cat.m_gender << "\n";
+    return os;
 }
+

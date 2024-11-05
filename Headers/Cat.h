@@ -25,7 +25,7 @@ public:
 
     void create_pasaport(int zi, int luna, int an);
 
-    void print_details() const;
+    friend std::ostream& operator<<(std::ostream& os, const cat& Cat);
 };
 
 

@@ -17,16 +17,17 @@ private:
     char m_gender;
 
 public:
-    pasaport() : m_date{0, 0, 0}, m_name(""), m_age(0), m_gender(' ')
-    {
-    }
+    pasaport();
 
-    pasaport(int zi, int luna, int an, std::string& name, int age, char gender);
+    explicit pasaport(int zi, int luna, int an, const std::string& name, int age, char gender);
 
     pasaport(const pasaport& other);
 
     pasaport& operator=(const pasaport& other);
-    std::string get_date() const;
+    friend std::ostream& operator<<(std::ostream& os, const pasaport& ps);
 
-    ~pasaport() = default;
+
+    [[nodiscard]] std::string get_date() const;
+
+    ~pasaport();
 };
