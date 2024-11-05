@@ -9,12 +9,12 @@
 
 int main()
 {
-    // unsigned int WindowWidth{600}, WindowHeight{800};
+    // unsigned int WindowWidth{900}, WindowHeight{800};
     //
     // sf::RenderWindow window(sf::VideoMode(WindowWidth, WindowHeight), "My window");
     // sf::CircleShape shape(50.f);
     // shape.setFillColor(sf::Color(100, 250, 50));
-    // float circle_x{40};
+    // float circle_x{200};
     // float circle_y{300};
     // float speed{0.3f};
     //
@@ -61,7 +61,7 @@ int main()
     //     window.display();
     // }
 
-    cat myCat("Sofi", "Striped", "Gray", "Green", 3, 'F');
+    Cat myCat("Sofi", "Striped", "Gray", "Green", 3, 'F');
     myCat.create_pasaport(15, 10, 2024);
 
     std::cout << myCat << std::endl;

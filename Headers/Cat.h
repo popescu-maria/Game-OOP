@@ -4,7 +4,7 @@
 #include "../Headers/Pasaport.h"
 
 
-class cat
+class Cat
 {
 private:
     std::string m_name;
@@ -13,19 +13,20 @@ private:
     std::string m_color_of_eyes;
     int m_age;
     char m_gender;
-    pasaport m_pasaport;
+    Pasaport m_pasaport;
 
 public:
-    cat(const std::string& name, const std::string& patterns, const std::string& color,
+    Cat(const std::string& name, const std::string& patterns, const std::string& color,
         const std::string& color_of_eyes, int age, char gender);
 
-    cat() { generateRandomCat(); }
+    Cat() { generateRandomCat(); }
 
     void generateRandomCat();
 
     void create_pasaport(int zi, int luna, int an);
+    [[nodiscard]] std::string getTextureFilename() const;
 
-    friend std::ostream& operator<<(std::ostream& os, const cat& Cat);
+    friend std::ostream& operator<<(std::ostream& os, const Cat& cat);
 };
 
 

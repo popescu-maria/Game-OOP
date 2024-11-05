@@ -1,7 +1,7 @@
 #pragma once
 
 
-class pasaport
+class Pasaport
 {
 private:
     struct data_expirare
@@ -17,17 +17,17 @@ private:
     char m_gender;
 
 public:
-    pasaport();
+    Pasaport();
 
-    explicit pasaport(int zi, int luna, int an, const std::string& name, int age, char gender);
+    explicit Pasaport(int zi, int luna, int an, const std::string& name, int age, char gender);
 
-    pasaport(const pasaport& other);
+    Pasaport(const Pasaport& other);
 
-    pasaport& operator=(const pasaport& other);
-    friend std::ostream& operator<<(std::ostream& os, const pasaport& ps);
+    Pasaport& operator=(const Pasaport& other);
+    friend std::ostream& operator<<(std::ostream& os, const Pasaport& ps);
 
 
     [[nodiscard]] std::string get_date() const;
 
-    ~pasaport();
+    ~Pasaport();
 };

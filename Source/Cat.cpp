@@ -4,7 +4,7 @@
 
 #include "../Headers/Cat.h"
 
-cat::cat(const std::string& name,
+Cat::Cat(const std::string& name,
          const std::string& patterns,
          const std::string& color,
          const std::string& color_of_eyes,
@@ -14,12 +14,12 @@ cat::cat(const std::string& name,
 {
 }
 
-void cat::create_pasaport(int zi, int luna, int an)
+void Cat::create_pasaport(int zi, int luna, int an)
 {
-    m_pasaport = pasaport(zi, luna, an, m_name, m_age, m_gender);
+    m_pasaport = Pasaport(zi, luna, an, m_name, m_age, m_gender);
 }
 
-void cat::generateRandomCat()
+void Cat::generateRandomCat()
 {
     static std::vector<std::string> colors = {"Black", "White", "Orange", "Gray"};
     static std::vector<std::string> patterns = {"Striped", "Solid", "Spotted", "Mixed"};
@@ -32,7 +32,11 @@ void cat::generateRandomCat()
     m_gender = (rand() % 2 == 0) ? 'M' : 'F'; // Random gender
 }
 
-std::ostream& operator<<(std::ostream& os, const cat& Cat)
+std::string Cat::getTextureFilename() const {
+    return "Cat_" + m_color + "_" + m_patterns + "_" + m_color_of_eyes + ".png";
+}
+
+std::ostream& operator<<(std::ostream& os, const Cat& Cat)
 {
     os << "Nume: " << Cat.m_name << "\nModel: " << Cat.m_patterns
         << "\nCuloare: " << Cat.m_color << "\nCuloarea ochilor" << Cat.m_color_of_eyes
