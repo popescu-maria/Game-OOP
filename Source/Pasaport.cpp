@@ -33,6 +33,7 @@ std::ostream& operator<<(std::ostream& os, const pasaport& ps)
 {
     os << "Data de expirare: " << ps.get_date() << "\nNume pisica: " << ps.m_name
         << "\nVarsta pisica: " << ps.m_age << "\nGenul pisica: " << ps.m_gender << "\n";
+    return os;
 }
 
 std::string pasaport::get_date() const
