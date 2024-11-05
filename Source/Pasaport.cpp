@@ -7,6 +7,7 @@
 pasaport::pasaport() : m_date{0, 0, 0}, m_name(""), m_age(0), m_gender(' ')
 {
 }
+
 pasaport::pasaport(int zi, int luna, int an, const std::string& name, int age, char gender)
     : m_date{zi, luna, an}, m_name(name), m_age(age), m_gender(gender)
 {
@@ -31,7 +32,7 @@ pasaport& pasaport::operator=(const pasaport& other)
 std::ostream& operator<<(std::ostream& os, const pasaport& ps)
 {
     os << "Data de expirare: " << ps.get_date() << "\nNume pisica: " << ps.m_name
-    << "\nVarsta pisica: " << ps.m_age << "\nGenul pisica: " << ps.m_gender << "\n";
+        << "\nVarsta pisica: " << ps.m_age << "\nGenul pisica: " << ps.m_gender << "\n";
 }
 
 std::string pasaport::get_date() const
