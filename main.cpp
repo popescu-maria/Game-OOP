@@ -64,7 +64,7 @@ int main()
     cat myCat("Sofi", "Striped", "Gray", "Green", 3, 'F');
     myCat.create_pasaport(15, 10, 2024);
 
-    std::cout << myCat<< std::endl;
+    std::cout << myCat << std::endl;
 
     Helper helper;
     helper.help();
