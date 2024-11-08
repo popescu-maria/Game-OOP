@@ -2,8 +2,8 @@
 
 #include "Cat.h"
 #include "Pasaport.h"
-#include "map"
 
+#include <map>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -16,8 +16,8 @@ class Game
     std::map<std::string, sf::Texture> m_textures;
     sf::RenderWindow m_window;
 
-    Cat currentCat;
-    Pasaport currentPasaport;
+    Cat& currentCat;
+    Pasaport& currentPasaport;
 
     Cat generateRandomCat();
     bool checkPlayerDecision(const Cat& cat, const Pasaport& pasaport);

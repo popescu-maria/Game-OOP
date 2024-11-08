@@ -1,7 +1,7 @@
 
 #include "../Headers/GameLogic.h"
-#include "map"
 
+#include <map>
 #include <iostream>
 #include <ostream>
 #include <SFML/Window.hpp>
@@ -11,7 +11,7 @@
 //STRICT PENTRU TEMA 1
 
 Game::Game(const Cat& cat, const Pasaport& pasaport)
-    : m_window(sf::VideoMode(800, 600), "Cats Apocalypse",  currentCat(cat), currentPasaport(pasaport))
+    : m_window(sf::VideoMode(800, 600), "Cats Apocalypse", currentCat(cat), currentPasaport(pasaport))
 {
     //loadTextures();
 }
