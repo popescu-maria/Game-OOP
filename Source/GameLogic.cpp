@@ -10,11 +10,6 @@
 //NU AM INCARCAT TEXTURES, NU E COMPLET. TREBUIE SA GASESC O METODA SA CORESPUNDA ANTRIBUTELE PISICII CU IMAGINEA
 //STRICT PENTRU TEMA 1
 
-Game::Game(const Cat& cat, const Pasaport& pasaport)
-    : m_window(sf::VideoMode(800, 600), "Cats Apocalypse", currentCat(cat), currentPasaport(pasaport))
-{
-    //loadTextures();
-}
 
 void loadTextures()
 {

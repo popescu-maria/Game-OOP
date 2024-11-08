@@ -15,7 +15,6 @@ class Game
 
     std::map<std::string, sf::Texture> m_textures;
     sf::RenderWindow m_window;
-
     Cat& currentCat;
     Pasaport& currentPasaport;
 
@@ -23,7 +22,7 @@ class Game
     bool checkPlayerDecision(const Cat& cat, const Pasaport& pasaport);
 
 public:
-    Game(const Cat& cat, const Pasaport& pasaport);
+    Game(Cat& cat, Pasaport& pasaport);
 
     void loadTextures();
     void drawCat(const Cat& cat);
