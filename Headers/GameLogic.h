@@ -29,7 +29,6 @@ public:
     void drawCat(const Cat& cat);
 
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
-
 };
 
 
