@@ -19,6 +19,10 @@ Pasaport::Pasaport(const Pasaport& other)
     std::cout << "constructor de copiere pentru pasaport\n";
 }
 
+bool Pasaport:: IsPasaportValid() const{
+    return true;
+}
+
 Pasaport& Pasaport::operator=(const Pasaport& other)
 {
     m_date.zi = other.m_date.zi;
@@ -45,5 +49,5 @@ std::string Pasaport::get_date() const
 
 Pasaport::~Pasaport()
 {
-    std::cout << "destructor explicit" << std::endl;
+    std::cout << "destructor explicit pasaport" << std::endl;
 }

@@ -20,8 +20,9 @@ public:
     Pasaport();
 
     explicit Pasaport(int zi, int luna, int an, const std::string& name, int age, char gender);
-
     Pasaport(const Pasaport& other);
+
+    [[nodiscard]] virtual bool IsPasaportValid() const;
 
     Pasaport& operator=(const Pasaport& other);
     friend std::ostream& operator<<(std::ostream& os, const Pasaport& ps);

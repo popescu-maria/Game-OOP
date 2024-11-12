@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <SFML/Graphics.hpp>
+
 #include "../Headers/Pasaport.h"
 
 
@@ -14,19 +16,25 @@ private:
     int m_age;
     char m_gender;
     Pasaport m_pasaport;
+    sf:: Texture m_textureCat;
+
+    void generateRandomCat();
+    [[nodiscard]] std::string getTextureFilename() const;
 
 public:
     Cat(const std::string& name, const std::string& patterns, const std::string& color,
         const std::string& color_of_eyes, int age, char gender);
 
-    Cat() { generateRandomCat(); }
+    Cat();
 
-    void generateRandomCat();
-
-    void create_pasaport(int zi, int luna, int an);
-    [[nodiscard]] std::string getTextureFilename() const;
+    void displayCat() const;
+    virtual void create_pasaport();
+    virtual bool IsPasaportValid();
+    const Pasaport& getPasaport() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Cat& cat);
+
+    virtual ~Cat() = default;
 };
 
 

@@ -4,51 +4,66 @@
 #include <map>
 #include <iostream>
 #include <ostream>
+#include <limits>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-//NU AM INCARCAT TEXTURES, NU E COMPLET. TREBUIE SA GASESC O METODA SA CORESPUNDA ANTRIBUTELE PISICII CU IMAGINEA
-//STRICT PENTRU TEMA 1
 
+// void loadTextures()
+// {
+//     // Example
+//     Cat cat("Cat", "Solid", "Black", "Green", 2, 'M');
+//     std::string textureFile = cat.getTextureFilename();
+//
+//     sf::Texture texture;
+//     // if (texture.loadFromFile(textureFile)) {
+//     //     m_textures[textureFile] = texture;
+//     // } else {
+//     //     std::cerr << "Failed to load texture: " << textureFile << std::endl;
+//     // }
+// }
 
-void loadTextures()
-{
-    // Example
-    Cat cat("Cat", "Solid", "Black", "Green", 2, 'M');
-    std::string textureFile = cat.getTextureFilename();
-
-    sf::Texture texture;
-    // if (texture.loadFromFile(textureFile)) {
-    //     m_textures[textureFile] = texture;
-    // } else {
-    //     std::cerr << "Failed to load texture: " << textureFile << std::endl;
-    // }
+void Game::setTimeLimit() {
+    if (CurrentNivel.GetLevelNr() <= 5) {
+        m_timeLimit = 30.0f;
+    } else if (CurrentNivel.GetLevelNr() <= 7) {
+        m_timeLimit = 20.0f;
+    } else {
+        m_timeLimit = 10.0f;
+    }
 }
 
-void Game::drawCat(const Cat& cat)
+bool Game::checkPlayerDecision(const Pasaport& pasaport)
 {
-    sf::Sprite sprite;
-    std::string textureFile = cat.getTextureFilename();
-
-    if (m_textures.find(textureFile) != m_textures.end())
+    bool IsValid = pasaport.IsPasaportValid();
+    if(IsValid)
     {
-        sprite.setTexture(m_textures[textureFile]);
-        m_window.draw(sprite); //Desenez pisica
+        std::cout << "checking......." << std::endl;
+        sf::sleep(sf::seconds(2));
+        std::cout << "Documentele sunt valide!\n";
+        m_money += 100;
     }
     else
     {
-        std::cerr << "Texture not found: " << textureFile << std::endl;
+    std::cout << "checking......." << std::endl;
+    sf::sleep(sf::seconds(2));
+    std::cout << "Documente invalide!" << " Un intrus de tip uman a patruns in tara pisicilor" << std::endl;
+    m_money -= 100;
+    m_incercari++;
     }
+
+    return IsValid;
 }
 
-// bool Game::checkPlayerDecision(const Cat& cat, const Pasaport& pasaport)
-// {
-//     // logica bazata pe compararea pisicii cu pasaportul
-//     return true;
-// }
+void Game::Play()
+{
+    //while(!m_isGameOver())
+
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Game& game)
 {
-    os << "Score: " << game.m_score << "\nIs Game Over: " << (game.m_isGameOver ? "Yes" : "No");
+    os << "Money: " << game.m_money << "\nIs Game Over: " << (game.m_isGameOver ? "Yes" : "No");
     return os;
 }
