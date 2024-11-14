@@ -1,25 +1,19 @@
 #pragma once
 
+#include <chrono>
 
 class Pasaport
 {
 private:
-    struct data_expirare
-    {
-        int zi;
-        int luna;
-        int an;
-    };
-
-    data_expirare m_date;
+    std::chrono::year_month_day m_expDate;
     std::string m_name;
     int m_age;
     char m_gender;
 
 public:
-    Pasaport();
+    Pasaport() = default;
 
-    explicit Pasaport(int zi, int luna, int an, const std::string& name, int age, char gender);
+    explicit Pasaport(std::chrono::year_month_day expDate, const std::string& name, int age, char gender);
     Pasaport(const Pasaport& other);
 
     [[nodiscard]] virtual bool IsPasaportValid() const;
@@ -30,5 +24,5 @@ public:
 
     [[nodiscard]] std::string get_date() const;
 
-    ~Pasaport();
+    virtual ~Pasaport();
 };

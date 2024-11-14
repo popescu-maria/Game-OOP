@@ -6,62 +6,36 @@
 
 void Nivel::incrementDate()
 {
-    m_currentDate.zi++;
-
-    switch (m_currentDate.luna)
-    {
-    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-        if (m_currentDate.zi > 31) {
-            m_currentDate.zi = 1;
-            m_currentDate.luna++;
-        }
-        break;
-    case 2:
-        if (m_currentDate.zi > 28)
-        {
-            m_currentDate.zi = 1;
-            m_currentDate.luna++;
-        }
-        break;
-    case 4: case 6: case 9: case 11:
-        if (m_currentDate.zi > 30)
-        {
-            m_currentDate.zi = 1;
-            m_currentDate.luna++;
-        }
-        break;
-    default:
-        std::cout << "luna invalida!" << std::endl;
-        break;
-    }
-    if (m_currentDate.luna > 12) {
-        m_currentDate.luna = 1;
-        m_currentDate.an++;
-    }
+    m_date = std::chrono::year_month_day{std::chrono::sys_days{m_date} + std::chrono::days{1}};
 }
 
-std::string Nivel:: get_date() const
+std::string Nivel::get_date() const
 {
     std::ostringstream date_stream;
-    date_stream << m_currentDate.zi << "/" << m_currentDate.luna << "/" << m_currentDate.an;
+    date_stream << static_cast<unsigned>(m_date.month()) << "/"
+        << static_cast<unsigned>(m_date.day()) << "/"
+        << static_cast<int>(m_date.year());
+
     return date_stream.str();
 }
 
-Nivel:: Nivel(Cat& current_cat, Pasaport& current_pasaport)
-        : currentCat(current_cat),
-          currentPasaport(current_pasaport), m_currentDate(1, 1, 2024)
+Nivel::Nivel(Cat& current_cat, Pasaport& current_pasaport)
+    : currentCat(current_cat),
+      currentPasaport(current_pasaport),
+    m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())})
+
 {
 }
 
 
 void Nivel::NextLevel()
 {
-    if(m_levelNr < m_maxNr)
+    if (m_levelNr < m_maxNr)
     {
         m_levelNr++;
         incrementDate();
         std::cout << "Felicitari, ai ajuns la ziua: " << m_levelNr
-        << ", in data de: " << get_date() << std::endl;
+            << ", in data de: " << get_date() << std::endl;
     }
     else
     {
@@ -77,6 +51,7 @@ int Nivel::GetLevelNr() const
 void Nivel::ResetLevel()
 {
     m_levelNr = 1;
-    m_currentDate = Date(1, 1, 2024);
+    const std::chrono::time_point now = std::chrono::system_clock::now();
+    m_date = std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(now)};
 }
 

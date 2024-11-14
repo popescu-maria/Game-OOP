@@ -5,9 +5,6 @@
 #include <iostream>
 #include <ostream>
 #include <limits>
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-
 
 // void loadTextures()
 // {

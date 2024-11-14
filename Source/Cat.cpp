@@ -56,32 +56,18 @@ Cat::Cat()
 
 void Cat::create_pasaport()
 {
+    auto today = std::chrono::system_clock::now();
+    auto today_sys_days = std::chrono::floor<std::chrono::days>(today);
+
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> monthDist(1, 12);
-    int luna = monthDist(gen);
-    int an = 2024;
+    std::uniform_int_distribution<> dist(0, 365);
 
-    int maxDay;
-    switch (luna)
-    {
-    case 4:
-    case 6:
-    case 9:
-    case 11:
-        maxDay = 30;
-        break;
-    case 2:
-        maxDay = 28;
-        break;
-    default:
-        maxDay = 31;
-    }
+    auto random_days = dist(gen);
 
-    std::uniform_int_distribution<> dayDist(1, maxDay);
-    int zi = dayDist(gen);
+    auto expDate = std::chrono::year_month_day{today_sys_days + std::chrono::days(random_days)};
 
-    m_pasaport = Pasaport(zi, luna, an, m_name, m_age, m_gender);
+    m_pasaport = Pasaport(expDate, m_name, m_age, m_gender);
 }
 
 bool Cat::IsPasaportValid()

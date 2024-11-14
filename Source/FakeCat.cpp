@@ -5,13 +5,11 @@
 
 void FakeCat::create_pasaport()
 {
-
 }
 
 bool FakeCat::IsPasaportValid()
 {
     return false;
 }
-
 
 
