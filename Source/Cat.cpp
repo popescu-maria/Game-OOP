@@ -23,9 +23,8 @@ void Cat::generateRandomCat()
     std::uniform_int_distribution<> colorDist(0, colors.size() - 1);
     std::uniform_int_distribution<> patternDist(0, patterns.size() - 1);
     std::uniform_int_distribution<> eyeColorDist(0, eyeColors.size() - 1);
-    std::uniform_int_distribution<> ageDist(0, 20);
+    std::uniform_int_distribution<> ageDist(1, 18);
     std::uniform_int_distribution<> genderDist(0, 1);
-
     m_name = names[nameDist(gen)];
     m_color = colors[colorDist(gen)];
     m_patterns = patterns[patternDist(gen)];
@@ -75,7 +74,8 @@ bool Cat::IsPasaportValid()
     return true;
 }
 
-const Pasaport& Cat::getPasaport() const {
+const Pasaport& Cat::getPasaport() const
+{
     return m_pasaport;
 }
 

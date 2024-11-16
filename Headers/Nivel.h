@@ -1,30 +1,22 @@
 #pragma once
 
-#include "../Headers/Cat.h"
+#include <chrono>
 
 class Nivel
 {
 private:
-    struct Date
-    {
-        int zi;
-        int luna;
-        int an;
-    };
-    int m_levelNr{1};
-    int m_maxNr{15};
-    Date m_currentDate;
+    std::chrono::year_month_day m_date;
 
-    Cat& currentCat;
-    Pasaport& currentPasaport;
+    int m_levelNr{1};
 
     void incrementDate();
     [[nodiscard]] std::string get_date() const;
 
 public:
-    Nivel(Cat& cat, Pasaport& pasaport);
+
+    Nivel();
 
     void NextLevel();
-    [[nodiscard]]int GetLevelNr() const;
+    [[nodiscard]] int GetLevelNr() const;
     void ResetLevel();
 };

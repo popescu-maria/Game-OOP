@@ -16,13 +16,11 @@ public:
     explicit Pasaport(std::chrono::year_month_day expDate, const std::string& name, int age, char gender);
     Pasaport(const Pasaport& other);
 
-    [[nodiscard]] virtual bool IsPasaportValid() const;
-
     Pasaport& operator=(const Pasaport& other);
     friend std::ostream& operator<<(std::ostream& os, const Pasaport& ps);
 
 
     [[nodiscard]] std::string get_date() const;
 
-    virtual ~Pasaport();
+    virtual ~Pasaport() = default;
 };

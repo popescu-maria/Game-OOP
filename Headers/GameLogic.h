@@ -15,25 +15,26 @@ class Game
     int m_incercari{0};
     Nivel CurrentNivel;
     sf::Clock m_clock;
-    float m_timeLimit;
+    //float m_timeLimit;
 
-    Cat m_currrent_cat;
+    std::shared_ptr<Cat> m_currrent_cat;
     Pasaport m_currrent_pasaport;
     //std::map<std::string, sf::Texture> m_textures;
     //sf::RenderWindow m_window;
-    void setTimeLimit();
-    bool checkPlayerDecision(const Pasaport& pasaport);
+    //void setTimeLimit();
+    static std::shared_ptr<Cat> getCurrentCat();
+    [[nodiscard]] bool checkPlayerDecision(const Cat& cat) const;
+    [[nodiscard]] bool isGameOver() const;
+    void resetGame();
 
 public:
     Game() = default;
     //void loadTextures();
 
-    bool checkPlayerDecision();
     void Play();
-
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 
-    void resetGame();
+    ~Game() = default;
 };
 
 

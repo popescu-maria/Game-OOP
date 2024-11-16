@@ -4,7 +4,6 @@
 
 #include "../Headers/Pasaport.h"
 
-
 class Cat
 {
 private:
@@ -20,6 +19,8 @@ private:
 
     void generateRandomCat();
     //[[nodiscard]] std::string getTextureFilename() const;
+
+    friend class FakeCat;
 
 public:
     Cat(const std::string& name, const std::string& patterns, const std::string& color,

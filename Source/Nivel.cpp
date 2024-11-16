@@ -19,28 +19,19 @@ std::string Nivel::get_date() const
     return date_stream.str();
 }
 
-Nivel::Nivel(Cat& current_cat, Pasaport& current_pasaport)
-    : currentCat(current_cat),
-      currentPasaport(current_pasaport),
-    m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())})
-
+Nivel::Nivel()
+    : m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())}),
+      m_levelNr{1}
 {
 }
 
 
 void Nivel::NextLevel()
 {
-    if (m_levelNr < m_maxNr)
-    {
-        m_levelNr++;
-        incrementDate();
-        std::cout << "Felicitari, ai ajuns la ziua: " << m_levelNr
-            << ", in data de: " << get_date() << std::endl;
-    }
-    else
-    {
-        std::cout << "Ai completat toate nivelele, poti sa te pensionezi!!" << std::endl;
-    }
+    std::cout << "Felicitari, ai ajuns la ziua: " << m_levelNr
+        << ", in data de: " << get_date() << std::endl;
+    m_levelNr++;
+    incrementDate();
 }
 
 int Nivel::GetLevelNr() const
@@ -54,4 +45,3 @@ void Nivel::ResetLevel()
     const std::chrono::time_point now = std::chrono::system_clock::now();
     m_date = std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(now)};
 }
-
