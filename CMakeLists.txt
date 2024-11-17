@@ -25,6 +25,7 @@ set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 # din cauza SFML
 set(WARNINGS_AS_ERRORS OFF)
 
+
 # NOTE: Also update SFML_VERSION env var in .github/workflows/cmake.yml:84
 FetchContent_Declare(
         SFML
@@ -60,6 +61,10 @@ add_executable(${PROJECT_NAME}
         Headers/Pasaport.h
         Source/GameLogic.cpp
         Headers/GameLogic.h
+        Headers/FakeCat.h
+        Source/FakeCat.cpp
+        Headers/Nivel.h
+        Source/Nivel.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
