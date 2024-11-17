@@ -111,7 +111,7 @@ void Game::Play()
         std::cout << "Do you think the cat's passaport is valid? (y/n)  ";
 
         char choice;
-        bool isValid;
+        bool isValid = false;
         int incercariInput = 0;
         while (true)
         {
