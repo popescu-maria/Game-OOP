@@ -74,14 +74,14 @@ bool Game::isGameOver() const
     if (m_money <= 0)
     {
         std::cout << "Ai ramas fara bani!" << std::endl;
-        return false;
+        return true;
     }
     if (m_incercari >= 3)
     {
         std::cout << "Ai lasat 3 oameni in taraPisicilor! Esti concediat" << std::endl;
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 void Game::resetGame()
@@ -112,31 +112,37 @@ void Game::Play()
 
         char choice;
         bool isValid;
-        int incercari = 0;
+        int incercariInput = 0;
         while (true)
         {
             std::cin >> choice;
-            if (choice == 'y' || choice == 'Y')
+
+            if (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Eroare: " << "input invalid\n";
+            }
+
+            else if (choice == 'y' || choice == 'Y')
             {
                 isValid = true;
                 break;
             }
-            if (choice == 'n' || choice == 'N')
+            else if (choice == 'n' || choice == 'N')
             {
                 isValid = false;
                 break;
             }
-            std::cout << "Alege o varianta valida! y or n\n";
-            incercari++;
-
-            if (incercari >= 4)
+            else
+                std::cout << "Alege o varianta valida! y or n\n";
+            if (++incercariInput >= 4)
             {
-                std::cout << "Ai depasit limita de incercari!"
+                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
+                m_isGameOver = true;
                 break;
             }
         }
-        if (m_isGameOver)
-            break;
 
         if (checkPlayerDecision() == isValid)
         {
@@ -158,56 +164,84 @@ void Game::Play()
         std::cout << "Mancare tare:               " << "-50\n";
         std::cout << "Poti alege 1, 2, sau 0 daca nu vrei mancare" << std::endl;
 
+        incercariInput = 0;
         while (true)
         {
             std::cin >> optMancare;
+
             if (std::cin.fail())
             {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                optMancare = 0;
+                std::cout << "Eroare: " << "input invalid\n";
             }
-            if (optMancare == 0)
+            else if (optMancare == 0)
             {
                 break;
             }
-            if (optMancare == 1)
+            else if (optMancare == 1)
             {
                 m_money -= 100;
                 break;
             }
-            if (optMancare == 2)
+            else if (optMancare == 2)
             {
                 m_money -= 50;
                 break;
             }
-            std::cout << "Alege o varianta valida! 1, 2 or 0\n";
-        }
+            else
+                std::cout << "Alege o varianta valida! 1, 2 or 0\n";
 
-        m_isGameOver = isGameOver();
+            if (++incercariInput >= 4)
+            {
+                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
+                m_isGameOver = true;
+                break;
+            }
+        }
+        if(!m_isGameOver)
+            m_isGameOver = isGameOver();
 
         if (CurrentNivel.GetLevelNr() > 5)
         {
             std::cout << "Ai completat toate nivelele, poti sa te pensionezi!" << std::endl;
             std::cout << "Vrei sa joci un joc nou? (y/n)\n";
 
+            incercariInput = 0;
             while (true)
             {
                 char newGame;
                 std::cin >> newGame;
-                if (newGame == 'y' || newGame == 'Y')
+
+                if (std::cin.fail())
+                {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "Alege o varianta valida! y or n\n";
+                }
+
+                else if (newGame == 'y' || newGame == 'Y')
                 {
                     resetGame();
                     break;
                 }
-                if (newGame == 'n' || newGame == 'N')
+                else if (newGame == 'n' || newGame == 'N')
                 {
-                    m_isGameOver = false;
+                    m_isGameOver = true;
                     break;
                 }
-                std::cout << "Alege o varianta valida! y or n\n";
+                else
+                    std::cout << "Alege o varianta valida! y or n\n";
+
+                if (++incercariInput >= 4)
+                {
+                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
+                m_isGameOver = true;
+                break;
+                }
             }
-            m_isGameOver = isGameOver();
+            if(!m_isGameOver)
+                m_isGameOver = isGameOver();
         }
     }
     std::cout << "GAME OVER!" << std::endl;
