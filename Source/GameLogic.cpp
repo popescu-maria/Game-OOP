@@ -43,14 +43,14 @@ std::shared_ptr<Cat> Game::getCurrentCat()
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     double probability = dis(gen);
-    if (probability < 0.6)
+    if (probability < 0.7)
     {
         return std::make_shared<Cat>();
     }
     return std::make_shared<FakeCat>();
 }
 
-bool Game::checkPlayerDecision(const Cat& cat) const
+bool Game::checkPlayerDecision() const
 {
     bool IsValid = m_currrent_cat->IsPasaportValid();
     if (IsValid)
@@ -71,7 +71,17 @@ bool Game::checkPlayerDecision(const Cat& cat) const
 
 bool Game::isGameOver() const
 {
-    return m_money <= 0 || m_incercari >= 3;
+    if (m_money <= 0)
+    {
+        std::cout << "Ai ramas fara bani!" << std::endl;
+        return false;
+    }
+    if (m_incercari >= 3)
+    {
+        std::cout << "Ai lasat 3 oameni in taraPisicilor! Esti concediat" << std::endl;
+        return false;
+    }
+    return true;
 }
 
 void Game::resetGame()
@@ -95,7 +105,7 @@ void Game::Play()
         std::cout << "Press enter for next cat";
         std::cin.get();
 
-        std::cout << "Pisica: \n" << *m_currrent_cat << std::endl;
+        std::cout << "\nPisica: \n" << *m_currrent_cat << std::endl;
         std::cout << "Pasaportul piscii: \n" << m_currrent_pasaport << std::endl;
 
         std::cout << "Do you think the cat's passaport is valid? (y/n)  ";
@@ -118,7 +128,7 @@ void Game::Play()
             std::cout << "Alege o varianta valida! y or n\n";
         }
 
-        if (checkPlayerDecision(*m_currrent_cat) == isValid)
+        if (checkPlayerDecision() == isValid)
         {
             m_money += 100;
             std::cout << "Ai primit 100 de monede pentru pisici!" << std::endl;
@@ -129,63 +139,66 @@ void Game::Play()
             m_money -= 100;
             m_incercari++;
         }
-        std::cout << "Monedele tale:              " << m_money << "\n";
+        std::cout << "Monedele tale:               " << m_money << "\n";
         std::cout << "Chirie pentru cutie:        " << "-200" << std::endl;
         m_money -= 200;
         int optMancare;
         std::cout << "Poti alege daca vrei sa cumperi: \n";
-        std::cout << "Pliculete pentru pisici:   " << "-100\n";
+        std::cout << "Pliculete pentru pisici:    " << "-100\n";
         std::cout << "Mancare tare:               " << "-50\n";
-        std::cout << "Poti alege 1, 2, sau apasa orice buton daca nu vrei mancare" << std::endl;
+        std::cout << "Poti alege 1, 2, sau 0 daca nu vrei mancare" << std::endl;
 
-        std::cin >> optMancare;
-
-        if (std::cin.fail())
+        while (true)
         {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            optMancare = 0;
-        }
-
-        switch (optMancare)
-        {
-        case 1:
-            m_money -= 100;
-            break;
-        case 2:
-            m_money -= 50;
-            break;
-        default:
-            break;
+            std::cin >> optMancare;
+            if (std::cin.fail())
+            {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                optMancare = 0;
+            }
+            if (optMancare == 0)
+            {
+                break;
+            }
+            if (optMancare == 1)
+            {
+                m_money -= 100;
+                break;
+            }
+            if (optMancare == 2)
+            {
+                m_money -= 50;
+                break;
+            }
+            std::cout << "Alege o varianta valida! 1, 2 or 0\n";
         }
 
         m_isGameOver = isGameOver();
 
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        int nivel = CurrentNivel.GetLevelNr();
-
-        if (nivel == 10)
+        char newGame;
+        if (CurrentNivel.GetLevelNr() > 5)
         {
             std::cout << "Ai completat toate nivelele, poti sa te pensionezi!" << std::endl;
             std::cout << "Vrei sa joci un joc nou? (y/n)\n";
 
-            std::cin >> choice;
 
             while (true)
             {
-                std::cin >> choice;
-                if (choice == 'y' || choice == 'Y')
+                std::cin >> newGame;
+                if (newGame == 'y' || newGame == 'Y')
                 {
                     resetGame();
                     break;
                 }
-                if (choice == 'n' || choice == 'N')
+                if (newGame == 'n' || newGame == 'N')
                 {
                     m_isGameOver = false;
                     break;
                 }
                 std::cout << "Alege o varianta valida! y or n\n";
             }
+            m_isGameOver = isGameOver();
         }
     }
     std::cout << "GAME OVER!" << std::endl;

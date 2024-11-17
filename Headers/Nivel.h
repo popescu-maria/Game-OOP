@@ -13,7 +13,6 @@ private:
     [[nodiscard]] std::string get_date() const;
 
 public:
-
     Nivel();
 
     void NextLevel();

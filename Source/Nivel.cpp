@@ -20,8 +20,7 @@ std::string Nivel::get_date() const
 }
 
 Nivel::Nivel()
-    : m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())}),
-      m_levelNr{1}
+    : m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())})
 {
 }
 

@@ -6,6 +6,7 @@
 //#include <map>
 //#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 
 class Game
@@ -23,7 +24,7 @@ class Game
     //sf::RenderWindow m_window;
     //void setTimeLimit();
     static std::shared_ptr<Cat> getCurrentCat();
-    [[nodiscard]] bool checkPlayerDecision(const Cat& cat) const;
+    [[nodiscard]] bool checkPlayerDecision() const;
     [[nodiscard]] bool isGameOver() const;
     void resetGame();
 
