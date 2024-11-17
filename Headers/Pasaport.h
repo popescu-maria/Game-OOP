@@ -5,10 +5,10 @@
 class Pasaport
 {
 private:
-    std::chrono::year_month_day m_expDate;
+    std::chrono::year_month_day m_expDate = std::chrono::year_month_day{std::chrono::year{2020}/1/1};;
     std::string m_name;
-    int m_age;
-    char m_gender;
+    int m_age = 0;
+    char m_gender = 'U';
 
 public:
     Pasaport() = default;

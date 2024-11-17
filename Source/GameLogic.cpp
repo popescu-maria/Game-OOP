@@ -182,7 +182,6 @@ void Game::Play()
             std::cout << "Ai completat toate nivelele, poti sa te pensionezi!" << std::endl;
             std::cout << "Vrei sa joci un joc nou? (y/n)\n";
 
-
             while (true)
             {
                 std::cin >> newGame;
