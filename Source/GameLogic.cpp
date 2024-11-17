@@ -112,6 +112,7 @@ void Game::Play()
 
         char choice;
         bool isValid;
+        int incercari = 0;
         while (true)
         {
             std::cin >> choice;
@@ -126,7 +127,16 @@ void Game::Play()
                 break;
             }
             std::cout << "Alege o varianta valida! y or n\n";
+            incercari++;
+
+            if (incercari >= 4)
+            {
+                std::cout << "Ai depasit limita de incercari!"
+                break;
+            }
         }
+        if (m_isGameOver)
+            break;
 
         if (checkPlayerDecision() == isValid)
         {
@@ -176,7 +186,6 @@ void Game::Play()
 
         m_isGameOver = isGameOver();
 
-        char newGame;
         if (CurrentNivel.GetLevelNr() > 5)
         {
             std::cout << "Ai completat toate nivelele, poti sa te pensionezi!" << std::endl;
@@ -184,6 +193,7 @@ void Game::Play()
 
             while (true)
             {
+                char newGame;
                 std::cin >> newGame;
                 if (newGame == 'y' || newGame == 'Y')
                 {

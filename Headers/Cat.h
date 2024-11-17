@@ -31,7 +31,7 @@ public:
     //void displayCat() const;
     virtual void create_pasaport();
     virtual bool IsPasaportValid();
-    const Pasaport& getPasaport() const;
+    [[nodiscard]] const Pasaport& getPasaport() const;
 
     friend std::ostream& operator<<(std::ostream& os, const Cat& cat);
 
