@@ -146,8 +146,8 @@ void Game::Play()
 
         if (checkPlayerDecision() == isValid)
         {
-            m_money += 100;
-            std::cout << "Ai primit 100 de monede pentru pisici!" << std::endl;
+            m_money += 300;
+            std::cout << "Ai primit 300 de monede pentru pisici!" << std::endl;
         }
         else
         {
@@ -160,8 +160,8 @@ void Game::Play()
         m_money -= 200;
         int optMancare;
         std::cout << "Poti alege daca vrei sa cumperi: \n";
-        std::cout << "Pliculete pentru pisici:    " << "-100\n";
-        std::cout << "Mancare tare:               " << "-50\n";
+        std::cout << "Pliculete pentru pisici:    " << "-50\n";
+        std::cout << "Mancare tare:               " << "-25\n";
         std::cout << "Poti alege 1, 2, sau 0 daca nu vrei mancare" << std::endl;
 
         incercariInput = 0;
@@ -181,12 +181,12 @@ void Game::Play()
             }
             else if (optMancare == 1)
             {
-                m_money -= 100;
+                m_money -= 50;
                 break;
             }
             else if (optMancare == 2)
             {
-                m_money -= 50;
+                m_money -= 25;
                 break;
             }
             else
