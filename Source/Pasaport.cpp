@@ -1,42 +1,50 @@
 #include <sstream>
+#include <random>
+
 #include "../Headers/Pasaport.h"
+#include "../Headers/Cat.h"
 
 #include <iostream>
+#include <utility>
 
-Pasaport::Pasaport(std::chrono::year_month_day expDate, const std::string& name, int age, char gender)
-    : m_expDate{expDate}, m_name(name), m_age(age), m_gender(gender)
+void Pasaport::create_document()
 {
+    auto today = std::chrono::system_clock::now();
+    auto today_sys_days = std::chrono::floor<std::chrono::days>(today);
+
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 365);
+
+    auto random_days = dist(gen);
+    m_expDate = std::chrono::year_month_day{today_sys_days + std::chrono::days(random_days)};
+
+    const sf::Vector2f nameOffset(20.f, 30.f);
+    const sf::Vector2f dobOffset(300.f, 215.f);
+    const sf::Vector2f genderOffset(300.f, 245.f);
+    //const sf::Vector2f issueOffset(300.f, 275.f);
+    const sf::Vector2f expDateOffset(300.f, 305.f);
+
+    TextBuilder builder;
+    AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
+        .setPos(m_documentSprite.getPosition() + nameOffset)
+        .setString(m_name).build());
+    AddText(builder.setFont().setSize(15).setCol(sf::Color::Black)
+        .setPos(m_documentSprite.getPosition() + dobOffset)
+        .setString(std::to_string(m_age)).build());
+    AddText(builder.setFont().setSize(15).setCol(sf::Color::Black)
+        .setPos(m_documentSprite.getPosition() + genderOffset)
+        .setString(std::string(1, m_gender)).build());
+    //ISS : AddText(builder.setFont().setSize(15).setCol(sf::Color::Black).setPos(m_documentSprite.getPosition() + dobOffset).setString(m_age).build());
+    AddText(builder.setFont().setSize(15).setCol(sf::Color::Black)
+        .setPos(m_documentSprite.getPosition() + expDateOffset)
+        .setString(get_date()).build());
+
 }
 
-Pasaport::Pasaport(const Pasaport& other)
-    : m_expDate(other.m_expDate), m_name(other.m_name), m_age(other.m_age), m_gender(other.m_gender)
+Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& fileName, const int age, const char gen, float scaleX = 0.5f, float scaleY = 0.5f)
+    : Documente(pos, std::move(name), fileName), m_age(age), m_gender(gen)
 {
-    std::cout << "constructor de copiere pentru pasaport\n";
-}
-
-Pasaport& Pasaport::operator=(const Pasaport& other)
-{
-    m_expDate = other.m_expDate;
-    m_name = other.m_name;
-    m_age = other.m_age;
-    m_gender = other.m_gender;
-    return *this;
-}
-
-std::ostream& operator<<(std::ostream& os, const Pasaport& ps)
-{
-    os << "Data de expirare: " << ps.get_date() << "\nNume pisica: " << ps.m_name
-        << "\nVarsta pisica: " << ps.m_age << "\nGenul pisica: " << ps.m_gender << "\n";
-    return os;
-}
-
-std::string Pasaport::get_date() const
-{
-        std::ostringstream date_stream;
-        date_stream << static_cast<unsigned>(m_expDate.month()) << "/"
-            << static_cast<unsigned>(m_expDate.day()) << "/"
-            << static_cast<int>(m_expDate.year());
-
-        return date_stream.str();
+    setScale(scaleX, scaleY);
 }
 

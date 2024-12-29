@@ -1,37 +1,42 @@
 #pragma once
 
-#include "Cat.h"
+#include "CatManager.h"
 #include "Nivel.h"
+#include "Money.h"
 
 //#include <map>
 //#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <vector>
 
 
 class Game
 {
-    bool m_isGameOver{false};
-    int m_money{500};
-    int m_incercari{0};
-    Nivel CurrentNivel;
-    sf::Clock m_clock;
-    //float m_timeLimit;
+    sf::RenderWindow m_window;
+    sf::Texture m_backgroundTexture;
+    sf::Sprite m_backgroundSprite;
 
-    std::shared_ptr<Cat> m_currrent_cat;
-    Pasaport m_currrent_pasaport;
+    bool m_isGameOver{false};
+    int m_incercari{0};
+    sf::Clock m_clock;
+
+    std::shared_ptr<Nivel> m_CurrentNivel;
+    CatManager m_current_cat;
+    std::vector<std::shared_ptr<Documente>> m_currentDocs;
+    Money& money = Money::get_money();
     //std::map<std::string, sf::Texture> m_textures;
-    //sf::RenderWindow m_window;
     //void setTimeLimit();
-    static std::shared_ptr<Cat> getCurrentCat();
-    [[nodiscard]] bool checkPlayerDecision() const;
+    auto loadBackground() -> void;
+    //[[nodiscard]] bool checkPlayerDecision() const;
     [[nodiscard]] bool isGameOver() const;
     void resetGame();
 
 public:
-    Game() = default;
+    Game();
     //void loadTextures();
 
+    void draw();
     void Play();
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 

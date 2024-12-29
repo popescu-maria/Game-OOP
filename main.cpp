@@ -5,8 +5,10 @@
 #include "Headers/GameLogic.h"
 
 
+
 int main()
 {
+
     std::cout << "\nPisicile au cucerit cu succes taraPisicilor (numele dat de noi)!!\n";
     std::cout << "Ai fost repartizat la granita!\n";
     std::cout << "O cutie va fi oferita tie si familiei tale\nSi 500 de monede" << std::endl;

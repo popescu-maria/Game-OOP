@@ -3,6 +3,7 @@
 
 #include "../Headers/Nivel.h"
 
+int Nivel::m_levelNr = 0;
 
 void Nivel::incrementDate()
 {
@@ -20,8 +21,10 @@ std::string Nivel::get_date() const
 }
 
 Nivel::Nivel()
-    : m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())})
+    : m_date(std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now())}),
+    m_elapsed_time(0)
 {
+    m_levelNr++;
 }
 
 
@@ -29,11 +32,11 @@ void Nivel::NextLevel()
 {
     std::cout << "Felicitari, ai ajuns la ziua: " << m_levelNr
         << ", in data de: " << get_date() << std::endl;
-    m_levelNr++;
     incrementDate();
+    m_elapsed_time = std::chrono::duration<double>(0);
 }
 
-int Nivel::GetLevelNr() const
+int Nivel::GetLevelNr()
 {
     return m_levelNr;
 }

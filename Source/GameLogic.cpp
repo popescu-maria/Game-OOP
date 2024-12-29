@@ -1,81 +1,63 @@
 #include "../Headers/GameLogic.h"
 #include "../Headers/FakeCat.h"
-//#include <map>
 #include <iostream>
 #include <ostream>
 #include <memory>
 #include <random>
-//#include <limits>
+#include <chrono>
 
-// void loadTextures()
+    void Game::loadBackground()
+    {
+        if (!m_backgroundTexture.loadFromFile("Img/background.png"))
+        {
+            std::cerr << "Error: Could not load background.png" << std::endl;
+            // End the game if the background cannot be loaded
+        }
+
+        // Set the background sprite
+        m_backgroundSprite.setTexture(m_backgroundTexture);
+
+        // Scale the background to fit the window size
+        const sf::Vector2u windowSize = m_window.getSize();
+        const sf::Vector2u textureSize = m_backgroundTexture.getSize();
+        m_backgroundSprite.setScale(
+            static_cast<float>(windowSize.x) / static_cast<float>(textureSize.x),
+            static_cast<float>(windowSize.y) / static_cast<float>(textureSize.y)
+        );
+    }
+
+
+// bool Game::checkPlayerDecision() const
 // {
-//     Cat cat("Cat", "Solid", "Black", "Green", 2, 'M');
-//     std::string textureFile = cat.getTextureFilename();
+//     //const bool IsValid = m_current_cat.getCurrentCat()->IsPasaportValid();
+//     std::random_device rd;
+//     std::mt19937 gen(rd());
+//     std::uniform_real_distribution distrib(0.0f, 2.5f);
 //
-//     sf::Texture texture;
-//     // if (texture.loadFromFile(textureFile)) {
-//     //     m_textures[textureFile] = texture;
-//     // } else {
-//     //     std::cerr << "Failed to load texture: " << textureFile << std::endl;
-//     // }
-// }
-
-// void Game::setTimeLimit()
-// {
-//     if (CurrentNivel.GetLevelNr() <= 5)
+//     if (IsValid)
 //     {
-//         m_timeLimit = 30.0f;
-//     }
-//     else if (CurrentNivel.GetLevelNr() <= 7)
-//     {
-//         m_timeLimit = 20.0f;
+//         const float secNr = distrib(gen);
+//         std::cout << "checking.......\n";
+//         sf::sleep(sf::seconds(secNr));
+//         std::cout << "Documentele sunt valide!" << std::endl;
 //     }
 //     else
 //     {
-//         m_timeLimit = 10.0f;
+//         std::cout << "checking.......\n" << std::endl;
+//         sf::sleep(sf::seconds(2));
+//         std::cout << "Documente invalide!" << std::endl;
 //     }
+//
+//     return IsValid;
 // }
-
-std::shared_ptr<Cat> Game::getCurrentCat()
-{
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(0.0, 1.0);
-
-    double probability = dis(gen);
-    if (probability < 0.7)
-    {
-        return std::make_shared<Cat>();
-    }
-    return std::make_shared<FakeCat>();
-}
-
-bool Game::checkPlayerDecision() const
-{
-    bool IsValid = m_currrent_cat->IsPasaportValid();
-    if (IsValid)
-    {
-        std::cout << "checking.......\n";
-        sf::sleep(sf::seconds(2));
-        std::cout << "Documentele sunt valide!" << std::endl;
-    }
-    else
-    {
-        std::cout << "checking.......\n" << std::endl;
-        sf::sleep(sf::seconds(2));
-        std::cout << "Documente invalide!" << std::endl;
-    }
-
-    return IsValid;
-}
 
 bool Game::isGameOver() const
 {
-    if (m_money <= 0)
-    {
-        std::cout << "Ai ramas fara bani!" << std::endl;
-        return true;
-    }
+    // if (m_money <= 0)
+    // {
+    //     std::cout << "Ai ramas fara bani!" << std::endl;
+    //     return true;
+    // }
     if (m_incercari >= 3)
     {
         std::cout << "Ai lasat 3 oameni in taraPisicilor! Esti concediat" << std::endl;
@@ -86,170 +68,76 @@ bool Game::isGameOver() const
 
 void Game::resetGame()
 {
-    m_money = 500;
+    money.reset();
     m_incercari = 0;
     m_isGameOver = false;
-    CurrentNivel.ResetLevel();
+    m_CurrentNivel->ResetLevel();
+}
+
+Game::Game()
+    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png")
+{
+    loadBackground();
+    m_CurrentNivel = std::make_shared<Nivel>();
+
+}
+
+void Game::draw()
+{
+    m_window.draw(m_backgroundSprite);
+
+    if(m_current_cat.getCurrentCat())
+    {
+        m_current_cat.getCurrentCat()->move();
+        m_current_cat.getCurrentCat()->drawCurrentCat(m_window);
+        for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
+        {
+            doc->move();
+            doc->drawDoc(m_window);
+        }
+    }
 }
 
 
 void Game::Play()
 {
-    while (!m_isGameOver)
+    sf::Clock clock;
+    //m_currentDocs = m_current_cat->getDocumente();
+
+    while (m_window.isOpen())
     {
-        CurrentNivel.NextLevel();
-        m_currrent_cat = getCurrentCat();
-        m_currrent_cat->create_pasaport();
-        m_currrent_pasaport = m_currrent_cat->getPasaport();
-
-        std::cout << "Press enter for next cat";
-        std::cin.get();
-
-        std::cout << "\nPisica: \n" << *m_currrent_cat << std::endl;
-        std::cout << "Pasaportul piscii: \n" << m_currrent_pasaport << std::endl;
-
-        std::cout << "Do you think the cat's passaport is valid? (y/n)  ";
-
-        char choice;
-        bool isValid = false;
-        int incercariInput = 0;
-        while (true)
+        sf::Event event{};
+        while (m_window.pollEvent(event))
         {
-            std::cin >> choice;
+            if (event.type == sf::Event::Closed)
+                m_window.close();
+        }
+        m_window.clear();
 
-            if (std::cin.fail())
+        if(!isGameOver())
+        {
+            static bool docsCreated = false; // Tracks if documents were created
+            if (!docsCreated)
             {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Eroare: " << "input invalid\n";
+                m_current_cat.getCurrentCat()->createCurrentDocs(Nivel::GetLevelNr());
+                docsCreated = true; // Avoid re-creating documents
             }
+            m_current_cat.checkCat();
+            draw();
 
-            else if (choice == 'y' || choice == 'Y')
-            {
-                isValid = true;
-                break;
-            }
-            else if (choice == 'n' || choice == 'N')
-            {
-                isValid = false;
-                break;
-            }
-            else
-                std::cout << "Alege o varianta valida! y or n\n";
-            if (++incercariInput >= 4)
-            {
-                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
-                m_isGameOver = true;
-                break;
-            }
         }
 
-        if (checkPlayerDecision() == isValid)
-        {
-            m_money += 300;
-            std::cout << "Ai primit 300 de monede pentru pisici!" << std::endl;
-        }
-        else
-        {
-            std::cout << "Ai pierdut 100 de monede!" << std::endl;
-            m_money -= 100;
-            m_incercari++;
-        }
-        std::cout << "Monedele tale:               " << m_money << "\n";
-        std::cout << "Chirie pentru cutie:        " << "-200" << std::endl;
-        m_money -= 200;
-        int optMancare;
-        std::cout << "Poti alege daca vrei sa cumperi: \n";
-        std::cout << "Pliculete pentru pisici:    " << "-50\n";
-        std::cout << "Mancare tare:               " << "-25\n";
-        std::cout << "Poti alege 1, 2, sau 0 daca nu vrei mancare" << std::endl;
+        //next level trebuie refacut pentru interfata. In next level vom avea un fundal nou ce va afisa banii facuti
+        //in acea zi si data curenta => sa fac money class
+        //CurrentNivel.NextLevel();
+        m_window.display();
 
-        incercariInput = 0;
-        while (true)
-        {
-            std::cin >> optMancare;
-
-            if (std::cin.fail())
-            {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Eroare: " << "input invalid\n";
-            }
-            else if (optMancare == 0)
-            {
-                break;
-            }
-            else if (optMancare == 1)
-            {
-                m_money -= 50;
-                break;
-            }
-            else if (optMancare == 2)
-            {
-                m_money -= 25;
-                break;
-            }
-            else
-                std::cout << "Alege o varianta valida! 1, 2 or 0\n";
-
-            if (++incercariInput >= 4)
-            {
-                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
-                m_isGameOver = true;
-                break;
-            }
-        }
-        if(!m_isGameOver)
-            m_isGameOver = isGameOver();
-
-        if (CurrentNivel.GetLevelNr() > 5)
-        {
-            std::cout << "Ai completat toate nivelele, poti sa te pensionezi!" << std::endl;
-            std::cout << "Vrei sa joci un joc nou? (y/n)\n";
-
-            incercariInput = 0;
-            while (true)
-            {
-                char newGame;
-                std::cin >> newGame;
-
-                if (std::cin.fail())
-                {
-                    std::cin.clear();
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                    std::cout << "Alege o varianta valida! y or n\n";
-                }
-
-                else if (newGame == 'y' || newGame == 'Y')
-                {
-                    resetGame();
-                    break;
-                }
-                else if (newGame == 'n' || newGame == 'N')
-                {
-                    m_isGameOver = true;
-                    break;
-                }
-                else
-                    std::cout << "Alege o varianta valida! y or n\n";
-
-                if (++incercariInput >= 4)
-                {
-                std::cout << "Ai depasit limita de incercari! Jocul se va termina dupa aceasta runda" << std::endl;
-                m_isGameOver = true;
-                break;
-                }
-            }
-            if(!m_isGameOver)
-                m_isGameOver = isGameOver();
-        }
     }
-    std::cout << "GAME OVER!" << std::endl;
 }
 
 
 std::ostream& operator<<(std::ostream& os, const Game& game)
 {
-    os << "Money: " << game.m_money << "\nIs Game Over: " << (game.m_isGameOver ? "Yes" : "No");
+    os << "Is Game Over: " << (game.m_isGameOver ? "Yes" : "No");
     return os;
 }

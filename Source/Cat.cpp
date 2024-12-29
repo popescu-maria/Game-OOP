@@ -31,52 +31,84 @@ void Cat::generateRandomCat()
     m_color_of_eyes = eyeColors[eyeColorDist(gen)];
     m_age = ageDist(gen);
     m_gender = genderDist(gen) == 0 ? 'M' : 'F';
+
 }
 
-// std::string Cat::getTextureFilename() const
-// {
-//     return "Cat_" + m_color + "_" + m_patterns + "_" + m_color_of_eyes + ".png";
-// }
+std::string Cat::getColorFilename() const { return "Cat_" + m_color + ".png"; }
+std::string Cat::getPatternsFilename() const { return "Cat_" + m_patterns + ".png"; }
+std::string Cat::getColorOfEyeFilename() const { return "Cat_" + m_color_of_eyes + ".png"; }
 
-Cat::Cat(const std::string& name,
-         const std::string& patterns,
-         const std::string& color,
-         const std::string& color_of_eyes,
-         int age, char gender)
-    : m_name(name), m_patterns(patterns),
-      m_color(color), m_color_of_eyes(color_of_eyes), m_age(age), m_gender(gender)
-{
-}
-
-Cat::Cat()
+Cat::Cat(const sf::RenderWindow& window, const std::string& fileName): m_speed(100.f)
 {
     generateRandomCat();
+    //adauga si celelalte atribute mai incolo, momeentan doar baza
+    if (!m_baseTexture.loadFromFile(fileName))
+        std::cerr << "Can't load texture for the base of the cat" << std::endl;
+    m_finalSprite.setTexture(m_baseTexture);
+
+    m_position.x = (static_cast<float>(window.getSize().x) - m_finalSprite.getGlobalBounds().height) / 30.f;
+    m_position.y = (static_cast<float>(window.getSize().y) - m_finalSprite.getGlobalBounds().height) - 475.f;
+
+    m_finalSprite.setPosition(
+        m_position.x - (static_cast<float>(m_baseTexture.getSize().x) - m_finalSprite.getGlobalBounds().height) / 2.f,
+        m_position.y - (static_cast<float>(m_baseTexture.getSize().y) - m_finalSprite.getGlobalBounds().height) / 2.f
+    );
+
+    m_finalSprite.setScale(2.5f, 2.5f);
 }
 
-void Cat::create_pasaport()
+void Cat::createCurrentDocs(int levelNr)
 {
-    auto today = std::chrono::system_clock::now();
-    auto today_sys_days = std::chrono::floor<std::chrono::days>(today);
+    m_documente.clear();
+    if (levelNr <= 5)
+    {
+        //de apelat const cu parametrii ca sa i setam poziti si fileName , poate le citim dintrun fisier
+        auto prototypePasaport = std::make_shared<Pasaport>( sf::Vector2f(100.f, 100.f), m_name, "Img/Pasaport.png", m_age, m_gender, 0.35f, 0.35f);
 
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(0, 365);
-
-    auto random_days = dist(gen);
-
-    auto expDate = std::chrono::year_month_day{today_sys_days + std::chrono::days(random_days)};
-
-    m_pasaport = Pasaport(expDate, m_name, m_age, m_gender);
+        //auto pasaport = prototypePasaport->clone();
+        prototypePasaport->createDoc();
+        m_documente.emplace_back(prototypePasaport);
+    }
 }
+
+void Cat::drawCurrentCat(sf::RenderWindow& window) const
+{
+    window.draw(m_finalSprite);
+}
+
 
 bool Cat::IsPasaportValid()
 {
     return true;
 }
 
-const Pasaport& Cat::getPasaport() const
+std::vector<std::shared_ptr<Documente>> Cat::getDocumente() const
 {
-    return m_pasaport;
+    return m_documente;
+}
+
+void Cat::setMoveTarget()
+{
+    if (!m_isMoving) {
+        targetX = m_moveDistance;
+        //m_isMoving = true;
+    }
+}
+
+void Cat::move()
+{
+    //setMoveTarget();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+    {
+        m_finalSprite.setPosition(m_finalSprite.getPosition() + sf::Vector2f(1, 0));
+    }
+}
+
+
+std::vector<std::shared_ptr<Documente>>& Cat::operator+=(const std::shared_ptr<Documente>& doc)
+{
+    this->m_documente.push_back(doc);
+    return this->m_documente;
 }
 
 
