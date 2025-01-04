@@ -75,6 +75,8 @@ add_executable(${PROJECT_NAME}
         Headers/Text.h
         Headers/ID.h
         Source/ID.cpp
+        Headers/DocFalsifier.h
+        Source/DocFalsifier.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

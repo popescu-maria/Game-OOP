@@ -18,12 +18,9 @@ int main()
     std::cout << "\nPisicile care au pasapoartele expirate, sunt oameni deghizati si nu trebuie\n";
     std::cout << "lasa-ti in taraPisicilor\n" << std::endl;
 
+
     Game currentGame;
     currentGame.Play();
-
-
-    Helper helper;
-    helper.help();
 
     return 0;
 }

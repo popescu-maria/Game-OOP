@@ -4,15 +4,20 @@
 
 class Text {
 private:
-    sf::Font font;
+    std::shared_ptr<sf::Font> font;
     sf::Text text;
 
     friend class TextBuilder;
 public:
-    Text() {
-        if (!font.loadFromFile("./ocr-a-extended.ttf")) {
+    Text() : font(std::make_shared<sf::Font>()){
+        if (!font->loadFromFile("./ocr-a-extended.ttf")) {
             throw std::runtime_error("The font was not found!\n");
         }
+        text.setFont(*font);
+    }
+
+    sf::Text& getText() {
+        return text;
     }
 
     const sf::Text& getText() const {
@@ -26,7 +31,6 @@ private:
 public:
     TextBuilder() = default;
     TextBuilder& setFont() {
-        curr.text.setFont(curr.font);
         return *this;
     }
     TextBuilder& setSize(float size) {

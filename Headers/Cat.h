@@ -6,7 +6,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "Documente.h"
-#include "Pasaport.h"
 
 class Cat
 {
@@ -22,22 +21,24 @@ private:
     const float m_speed{};
     float targetX{0.f};
 
-    std::string m_patterns;
-    std::string m_color;
-    std::string m_color_of_eyes;
+    // std::string m_patterns;
+    // std::string m_color;
+    // std::string m_color_of_eyes;
 
     void generateRandomCat();
-    [[nodiscard]] std::string getColorFilename() const;
-    [[nodiscard]] std::string getPatternsFilename() const;
-    [[nodiscard]] std::string getColorOfEyeFilename() const;
+    // [[nodiscard]] std::string getColorFilename() const;
+    // [[nodiscard]] std::string getPatternsFilename() const;
+    // [[nodiscard]] std::string getColorOfEyeFilename() const;
     std::vector<std::shared_ptr<Documente>> m_documente;
 
     std::string m_name;
     int m_age{};
     char m_gender{'F'};
+    int m_height{};
+    int m_weight{};
 
 public:
-    Cat() =  default;
+    Cat() { generateRandomCat(); };
 
     Cat(const sf::RenderWindow& window, const std::string& fileName);
 
@@ -45,7 +46,7 @@ public:
     //that the player has to check
     virtual void createCurrentDocs(int levelNr);
     void drawCurrentCat(sf::RenderWindow& window) const;
-    virtual bool IsPasaportValid();
+    virtual bool IsDocValid();
     [[nodiscard]] std::vector<std::shared_ptr<Documente>> getDocumente() const;
 
     void setMoveTarget();

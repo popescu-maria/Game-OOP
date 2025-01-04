@@ -13,11 +13,12 @@ private:
 
 protected:
     sf::Vector2f m_position;
-
     sf::Texture m_texture;
     sf::Sprite m_documentSprite;
-    std::vector<Text> m_texts;
+    std::vector<std::pair<Text, sf::Vector2f>> m_textsWithOffsets;
 
+    bool m_isDragging = false;
+    sf::Vector2f m_dragOffset;
     std::chrono::year_month_day m_expDate = std::chrono::year_month_day{std::chrono::year{2024} / 1 / 1};
     std::string m_name;
 
@@ -27,7 +28,7 @@ public:
     void createDoc();
     Documente(const Documente& oth);
     Documente& operator=(const Documente& oth);
-    Documente(sf::Vector2f pos, std::string  name, const std::string& fileName);
+    Documente(sf::Vector2f pos, std::string name, const std::string& fileName);
     virtual std::shared_ptr<Documente> clone() const = 0;
 
     [[nodiscard]] std::string get_date() const;
@@ -35,8 +36,11 @@ public:
     sf::Vector2f getPos() const;
     void setScale(float x, float y);
 
-    void move();
-    void AddText(const Text& text);
+    void AddText(const Text& text, const sf::Vector2f& offset);
+
+    void checkBounds(sf::RenderWindow& window);
+    void move(sf::RenderWindow& window);
+
     void drawDoc(sf::RenderWindow& window) const;
 
     virtual ~Documente() = default;

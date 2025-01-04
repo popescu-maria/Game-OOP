@@ -43,13 +43,13 @@ std::shared_ptr<Cat> CatManager::getCurrentCat()
 }
 
 
-void CatManager::checkCat()
+void CatManager::checkCat() const
 {
     if(m_currentCat)
     {
         //trebuie sa gasesc o modalitate sa verific toate tipurile derivate din documente din documente document
         for(const auto &e: m_currentCat->getDocumente())
-            if(e && m_currentCat->IsPasaportValid())
+            if(e && m_currentCat->IsDocValid())
                 m_CatsCount++;
         //createNewCat();
     }

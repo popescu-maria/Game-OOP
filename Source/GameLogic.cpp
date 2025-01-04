@@ -6,25 +6,25 @@
 #include <random>
 #include <chrono>
 
-    void Game::loadBackground()
+void Game::loadBackground()
+{
+    if (!m_backgroundTexture.loadFromFile("Img/background.png"))
     {
-        if (!m_backgroundTexture.loadFromFile("Img/background.png"))
-        {
-            std::cerr << "Error: Could not load background.png" << std::endl;
-            // End the game if the background cannot be loaded
-        }
-
-        // Set the background sprite
-        m_backgroundSprite.setTexture(m_backgroundTexture);
-
-        // Scale the background to fit the window size
-        const sf::Vector2u windowSize = m_window.getSize();
-        const sf::Vector2u textureSize = m_backgroundTexture.getSize();
-        m_backgroundSprite.setScale(
-            static_cast<float>(windowSize.x) / static_cast<float>(textureSize.x),
-            static_cast<float>(windowSize.y) / static_cast<float>(textureSize.y)
-        );
+        std::cerr << "Error: Could not load background.png" << std::endl;
+        // End the game if the background cannot be loaded
     }
+
+    // Set the background sprite
+    m_backgroundSprite.setTexture(m_backgroundTexture);
+
+    // Scale the background to fit the window size
+    const sf::Vector2u windowSize = m_window.getSize();
+    const sf::Vector2u textureSize = m_backgroundTexture.getSize();
+    m_backgroundSprite.setScale(
+        static_cast<float>(windowSize.x) / static_cast<float>(textureSize.x),
+        static_cast<float>(windowSize.y) / static_cast<float>(textureSize.y)
+    );
+}
 
 
 // bool Game::checkPlayerDecision() const
@@ -79,20 +79,19 @@ Game::Game()
 {
     loadBackground();
     m_CurrentNivel = std::make_shared<Nivel>();
-
 }
 
 void Game::draw()
 {
     m_window.draw(m_backgroundSprite);
 
-    if(m_current_cat.getCurrentCat())
+    if (m_current_cat.getCurrentCat())
     {
         m_current_cat.getCurrentCat()->move();
         m_current_cat.getCurrentCat()->drawCurrentCat(m_window);
         for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
         {
-            doc->move();
+            doc->move(m_window);
             doc->drawDoc(m_window);
         }
     }
@@ -114,9 +113,9 @@ void Game::Play()
         }
         m_window.clear();
 
-        if(!isGameOver())
+        if (!isGameOver())
         {
-            static bool docsCreated = false; // Tracks if documents were created
+            static bool docsCreated = false;
             if (!docsCreated)
             {
                 m_current_cat.getCurrentCat()->createCurrentDocs(Nivel::GetLevelNr());
@@ -124,14 +123,12 @@ void Game::Play()
             }
             m_current_cat.checkCat();
             draw();
-
         }
 
         //next level trebuie refacut pentru interfata. In next level vom avea un fundal nou ce va afisa banii facuti
         //in acea zi si data curenta => sa fac money class
         //CurrentNivel.NextLevel();
         m_window.display();
-
     }
 }
 

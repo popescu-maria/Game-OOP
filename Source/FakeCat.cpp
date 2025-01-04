@@ -6,7 +6,7 @@
 #include <random>
 
 
-bool FakeCat::IsPasaportValid()
+bool FakeCat::IsDocValid()
 {
     return false;
 }
