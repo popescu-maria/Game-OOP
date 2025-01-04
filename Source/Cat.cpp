@@ -6,6 +6,8 @@
 #include "../Headers/ID.h"
 #include "../Headers/Cat.h"
 
+#include "../Headers/EntryPermit.h"
+
 void Cat::generateRandomCat()
 {
     static std::vector<std::string> names = {
@@ -72,15 +74,16 @@ void Cat::createCurrentDocs(int levelNr)
     {
         auto prototypePasaport = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
                                                             m_age, m_gender, 0.35f, 0.35f);
-
         //auto pasaport = prototypePasaport->clone();
-        prototypePasaport->createDoc();
         m_documente.emplace_back(prototypePasaport);
 
         auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
                                                  m_height, m_weight, 1.2f, 1.2f);  // Example parameters
-        prototypeId->createDoc();
         m_documente.emplace_back(prototypeId);
+
+        auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
+            , 0.9f, 0.9f);
+        m_documente.emplace_back(EntryPermit);
     }
 }
 

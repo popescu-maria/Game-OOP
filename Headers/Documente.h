@@ -17,8 +17,12 @@ protected:
     sf::Sprite m_documentSprite;
     std::vector<std::pair<Text, sf::Vector2f>> m_textsWithOffsets;
 
+    std::optional<sf::Sprite> m_sealSprite;
+    sf::Vector2f m_sealOffset = {0.f, 0.f};
+
     bool m_isDragging = false;
     sf::Vector2f m_dragOffset;
+
     std::chrono::year_month_day m_expDate = std::chrono::year_month_day{std::chrono::year{2024} / 1 / 1};
     std::string m_name;
 
@@ -35,6 +39,7 @@ public:
     sf::Vector2f getSize() const;
     sf::Vector2f getPos() const;
     void setScale(float x, float y);
+    void setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset);
 
     void AddText(const Text& text, const sf::Vector2f& offset);
 

@@ -50,5 +50,6 @@ Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& 
     : Documente(pos, std::move(name), fileName), m_age(age), m_gender(gen)
 {
     setScale(scaleX, scaleY);
+    createDoc();
 }
 

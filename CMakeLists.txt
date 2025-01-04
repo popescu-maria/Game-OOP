@@ -77,6 +77,8 @@ add_executable(${PROJECT_NAME}
         Source/ID.cpp
         Headers/DocFalsifier.h
         Source/DocFalsifier.cpp
+        Headers/EntryPermit.h
+        Source/EntryPermit.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

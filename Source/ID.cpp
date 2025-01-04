@@ -45,9 +45,11 @@ void Id::SetFakeDistrict(const std::string& fakeDistrict)
     m_district = fakeDistrict;
 }
 
-Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileName, const int age, const int height, const int weight
+Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileName, const int age, const int height,
+       const int weight
        , float scaleX = 2.f, float scaleY = 2.f)
     : Documente(pos, name, fileName), m_age(age), m_height(height), m_weight(weight)
 {
     setScale(scaleX, scaleY);
+    createDoc();
 }

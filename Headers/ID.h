@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Documente.h"
-
 #include <iostream>
 
 class Id : public Documente
@@ -15,7 +14,7 @@ public:
     Id() = default;
 
     Id(sf::Vector2f pos, const std::string& name, const std::string& fileName, int age, int height, int weight
-        , float scaleX, float scaleY);
+       , float scaleX, float scaleY);
     void SetFakeDistrict(const std::string& fakeDistrict);
 
     std::shared_ptr<Documente> clone() const override

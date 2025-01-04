@@ -54,6 +54,14 @@ sf::Vector2f Documente::getSize() const
 
 sf::Vector2f Documente::getPos() const { return m_position; }
 
+void Documente::setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset)
+{
+    m_sealSprite.emplace();
+    m_sealSprite->setTexture(sealTexture);
+    m_sealSprite->setTextureRect(rect);
+    m_sealOffset = offset;
+}
+
 void Documente::setScale(float x, float y)
 {
     m_documentSprite.setScale(x, y);
@@ -70,8 +78,8 @@ void Documente::checkBounds(sf::RenderWindow& window)
     float leftBound = 350.f;
 
     sf::Vector2u windowSize = window.getSize();
-    float rightBound = static_cast<float>(windowSize.x);
-    float bottomBound = static_cast<float>(windowSize.y);
+    auto rightBound = static_cast<float>(windowSize.x);
+    auto bottomBound = static_cast<float>(windowSize.y);
 
     sf::Vector2f position = m_documentSprite.getPosition();
     sf::Vector2f size(m_documentSprite.getGlobalBounds().width, m_documentSprite.getGlobalBounds().height);
@@ -112,8 +120,14 @@ void Documente::move(sf::RenderWindow& window)
         if (m_isDragging)
         {
             m_documentSprite.setPosition(worldMousePos - m_dragOffset);
+
             for (auto& [text, offset] : m_textsWithOffsets) {
                 text.getText().setPosition(worldMousePos - m_dragOffset + offset);
+            }
+            //if the document has a seal, move it
+            if (m_sealSprite)
+            {
+                m_sealSprite->setPosition(m_documentSprite.getPosition() + m_sealOffset);
             }
         }
     }
@@ -127,8 +141,14 @@ void Documente::move(sf::RenderWindow& window)
 void Documente::drawDoc(sf::RenderWindow& window) const
 {
     window.draw(m_documentSprite);
+
     for (const auto& [text, offset] : m_textsWithOffsets) {
         window.draw(text.getText());
+    }
+    //if the document has a seal, draw it
+    if (m_sealSprite)
+    {
+        window.draw(*m_sealSprite);
     }
 }
 
