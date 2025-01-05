@@ -26,7 +26,7 @@ void EntryPermit::create_document()
     duration = durationDist(gen);
 
 
-    if (!m_sealTexture.loadFromFile("Img/setSeals1.png"))
+    if (!m_sealTexture.loadFromFile("Img/setSeals1.png  "))
     {
         throw std::runtime_error("Failed to load seal texture.");
     }
@@ -39,14 +39,16 @@ void EntryPermit::create_document()
 
     m_sealRect = sf::IntRect(randomSealIndex * sealWidth, 0, sealWidth, sealHeight);
 
-    setSeal(m_sealTexture, m_sealRect, sf::Vector2f(150.f, 200.f));
+    setSeal(m_sealTexture, m_sealRect, sf::Vector2f(240.f, 75.f));
 
+    const sf::Vector2f sealOffset(100.f, 50.f);
     const sf::Vector2f nameOffset(10.f, 20.f);
     const sf::Vector2f passportNrOffset(10.f, 200.f);
     const sf::Vector2f purposeOffset(10.f, 230.f);
     const sf::Vector2f durationOffset(10.f, 260.f);
     const sf::Vector2f expDateOffset(10.f, 290.f);
 
+    //m_sealSprite.setPosition(m_documentSprite.getPosition() + sealOffset);
     TextBuilder builder;
     AddText(builder.setFont().setSize(30).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + nameOffset)
@@ -61,15 +63,15 @@ void EntryPermit::create_document()
                    .setPos(m_documentSprite.getPosition() + durationOffset)
                    .setString(std::to_string(duration) + " days").build(), durationOffset);
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
-                       .setPos(m_documentSprite.getPosition() + expDateOffset)
-                       .setString(get_date()).build(), expDateOffset);
+                   .setPos(m_documentSprite.getPosition() + expDateOffset)
+                   .setString(get_date()).build(), expDateOffset);
 }
 
-EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX = 0.5f, float scaleY = 0.5f)
+EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX = 0.5f,
+                         float scaleY = 0.5f)
     : Documente(pos, name, fileName)
 {
     setScale(scaleX, scaleY);
-    createDoc();
 }
 
 void EntryPermit::setFakeSeal(const sf::Sprite& fakeSprite)

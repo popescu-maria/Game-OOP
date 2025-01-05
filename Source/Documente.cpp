@@ -60,6 +60,8 @@ void Documente::setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect,
     m_sealSprite->setTexture(sealTexture);
     m_sealSprite->setTextureRect(rect);
     m_sealOffset = offset;
+    m_sealSprite->setPosition(m_documentSprite.getPosition() + m_sealOffset);
+    m_sealSprite->setScale(0.5f, 0.5f);
 }
 
 void Documente::setScale(float x, float y)
@@ -102,6 +104,10 @@ void Documente::checkBounds(sf::RenderWindow& window)
     for (auto& [text, offset] : m_textsWithOffsets) {
         text.getText().setPosition(position + offset);
     }
+    if (m_sealSprite)
+    {
+        m_sealSprite->setPosition(position + m_sealOffset);
+    }
 }
 
 void Documente::move(sf::RenderWindow& window)
@@ -127,7 +133,7 @@ void Documente::move(sf::RenderWindow& window)
             //if the document has a seal, move it
             if (m_sealSprite)
             {
-                m_sealSprite->setPosition(m_documentSprite.getPosition() + m_sealOffset);
+                m_sealSprite->setPosition(worldMousePos - m_dragOffset + m_sealOffset);
             }
         }
     }

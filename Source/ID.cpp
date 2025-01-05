@@ -43,6 +43,12 @@ void Id::create_document()
 void Id::SetFakeDistrict(const std::string& fakeDistrict)
 {
     m_district = fakeDistrict;
+
+    const sf::Vector2f districtOffset(10.f, 20.f);
+    TextBuilder builder;
+    AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
+                   .setPos(m_documentSprite.getPosition() + districtOffset)
+                   .setString(m_district + " DISTRICT").build(), districtOffset);
 }
 
 Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileName, const int age, const int height,
@@ -51,5 +57,4 @@ Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileN
     : Documente(pos, name, fileName), m_age(age), m_height(height), m_weight(weight)
 {
     setScale(scaleX, scaleY);
-    createDoc();
 }

@@ -29,13 +29,15 @@ private:
     // [[nodiscard]] std::string getColorFilename() const;
     // [[nodiscard]] std::string getPatternsFilename() const;
     // [[nodiscard]] std::string getColorOfEyeFilename() const;
-    std::vector<std::shared_ptr<Documente>> m_documente;
 
     std::string m_name;
     int m_age{};
     char m_gender{'F'};
     int m_height{};
     int m_weight{};
+
+protected:
+    std::vector<std::shared_ptr<Documente>> m_documente;
 
 public:
     Cat() { generateRandomCat(); };

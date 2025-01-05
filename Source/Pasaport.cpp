@@ -43,6 +43,13 @@ void Pasaport::create_document()
 void Pasaport::SetFakeDate(const std::chrono::year_month_day& fakeDate)
 {
     m_expDate = fakeDate;
+
+    TextBuilder builder;
+    const sf::Vector2f expDateOffset(135.f, 245.f);
+
+    AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
+                   .setPos(m_documentSprite.getPosition() + expDateOffset)
+                   .setString(get_date()).build(), expDateOffset);
 }
 
 Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& fileName, const int age, const char gen,
@@ -50,6 +57,5 @@ Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& 
     : Documente(pos, std::move(name), fileName), m_age(age), m_gender(gen)
 {
     setScale(scaleX, scaleY);
-    createDoc();
 }
 

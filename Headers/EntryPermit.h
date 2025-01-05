@@ -12,6 +12,7 @@ class EntryPermit : public Documente
     std::string m_purpose = {};
     int duration{};
     void create_document() override;
+
 public:
     EntryPermit() = default;
 

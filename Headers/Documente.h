@@ -39,7 +39,7 @@ public:
     sf::Vector2f getSize() const;
     sf::Vector2f getPos() const;
     void setScale(float x, float y);
-    void setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset);
+    [[maybe_unused]] void setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset);
 
     void AddText(const Text& text, const sf::Vector2f& offset);
 
