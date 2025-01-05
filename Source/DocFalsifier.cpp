@@ -20,7 +20,7 @@ void PasaportFalsifier::falsify(std::shared_ptr<Documente>& doc)
         auto fakeExpDate = std::chrono::year_month_day{today_sys_days - std::chrono::days(random_days)};
 
         passport->SetFakeDate(fakeExpDate);
-        std::cout << "\ndata falsificata: " << fakeExpDate << std::endl;
+        //std::cout << "\ndata falsificata: " << fakeExpDate << std::endl;
     }
 }
 
@@ -37,7 +37,7 @@ void IDFalsifier::falsify(std::shared_ptr<Documente>& doc)
         std::uniform_int_distribution<> nameDist(0, districts.size() - 1);
 
         id->SetFakeDistrict(districts[nameDist(gen)]);
-        std::cout << "\ndistrict falsificata: " << districts[nameDist(gen)] << std::endl;
+        //std::cout << "\ndistrict falsificata: " << districts[nameDist(gen)] << std::endl;
     }
 }
 
