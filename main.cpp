@@ -2,6 +2,7 @@
 #include <Helper.h>
 #include <iostream>
 
+#include "Headers/FakeCat.h"
 #include "Headers/GameLogic.h"
 
 
@@ -17,7 +18,6 @@ int main()
     std::cout << "......................................................................\n";
     std::cout << "\nPisicile care au pasapoartele expirate, sunt oameni deghizati si nu trebuie\n";
     std::cout << "lasa-ti in taraPisicilor\n" << std::endl;
-
 
     Game currentGame;
     currentGame.Play();
