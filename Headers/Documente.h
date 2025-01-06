@@ -43,6 +43,7 @@ public:
     [[maybe_unused]] void setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset);
 
     void AddText(const Text& text, const sf::Vector2f& offset);
+    virtual void setText() = 0;
 
     void checkBounds(sf::RenderWindow& window);
     void move(sf::RenderWindow& window);

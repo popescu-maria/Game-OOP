@@ -5,7 +5,6 @@
 class EntryPermit : public Documente
 {
     sf::Texture m_sealTexture;
-    sf::Sprite m_sealSprite;
     sf::IntRect m_sealRect;
 
     std::string m_passaportNr = {};
@@ -17,6 +16,7 @@ public:
     EntryPermit() = default;
 
     EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX, float scaleY);
+    void setText() override;
     void setFakeSeal(const sf::Sprite& fakeSprite);
 
     std::shared_ptr<Documente> clone() const override

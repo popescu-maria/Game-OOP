@@ -1,5 +1,7 @@
 #include "../Headers/GameLogic.h"
 #include "../Headers/FakeCat.h"
+#include "../Headers/Exceptions.h"
+
 #include <iostream>
 #include <ostream>
 #include <memory>
@@ -10,7 +12,7 @@ void Game::loadBackground()
 {
     if (!m_backgroundTexture.loadFromFile("Img/background.png"))
     {
-        std::cerr << "Error: Could not load background.png" << std::endl;
+        throw missingTexture("Texture not found!\n");
         // End the game if the background cannot be loaded
     }
 

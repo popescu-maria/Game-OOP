@@ -16,6 +16,10 @@ void Id::create_document()
 
     m_district = districts[nameDist(gen)];
 
+}
+
+void Id::setText()
+{
     const sf::Vector2f districtOffset(10.f, 20.f);
     const sf::Vector2f nameOffset(120.f, 35.f);
     const sf::Vector2f ageOffset(160.f, 90.f);
@@ -31,7 +35,7 @@ void Id::create_document()
                    .setString(m_name).build(), nameOffset);
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + ageOffset)
-                   .setString(std::to_string(m_age)).build(), ageOffset);
+                   .setString(std::to_string(m_age) + " ani").build(), ageOffset);
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + heightOffset)
                    .setString(std::to_string(m_height) + " cm").build(), heightOffset);
@@ -40,15 +44,11 @@ void Id::create_document()
                    .setString(std::to_string(m_weight) + " kg").build(), weightOffset);
 }
 
+
 void Id::SetFakeDistrict(const std::string& fakeDistrict)
 {
     m_district = fakeDistrict;
-
-    const sf::Vector2f districtOffset(10.f, 20.f);
-    TextBuilder builder;
-    AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
-                   .setPos(m_documentSprite.getPosition() + districtOffset)
-                   .setString(m_district + " DISTRICT").build(), districtOffset);
+    setText();
 }
 
 Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileName, const int age, const int height,

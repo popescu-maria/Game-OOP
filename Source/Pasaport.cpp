@@ -17,7 +17,10 @@ void Pasaport::create_document()
 
     auto random_days = dist(gen);
     m_expDate = std::chrono::year_month_day{today_sys_days + std::chrono::days(random_days)};
+}
 
+void Pasaport::setText()
+{
     const sf::Vector2f nameOffset(20.f, 167.f);
     const sf::Vector2f dobOffset(135.f, 195.f);
     const sf::Vector2f genderOffset(135.f, 213.f);
@@ -30,7 +33,7 @@ void Pasaport::create_document()
                    .setString(m_name).build(), nameOffset);
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + dobOffset)
-                   .setString(std::to_string(m_age)).build(), dobOffset);
+                   .setString(std::to_string(m_age) + " ani").build(), dobOffset);
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + genderOffset)
                    .setString(std::string(1, m_gender)).build(), genderOffset);
@@ -40,16 +43,11 @@ void Pasaport::create_document()
                    .setString(get_date()).build(), expDateOffset);
 }
 
+
 void Pasaport::SetFakeDate(const std::chrono::year_month_day& fakeDate)
 {
     m_expDate = fakeDate;
-
-    TextBuilder builder;
-    const sf::Vector2f expDateOffset(135.f, 245.f);
-
-    AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
-                   .setPos(m_documentSprite.getPosition() + expDateOffset)
-                   .setString(get_date()).build(), expDateOffset);
+    setText();
 }
 
 Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& fileName, const int age, const char gen,

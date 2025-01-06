@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
+#include "Exceptions.h"
 
 class Text {
 private:
@@ -12,7 +13,7 @@ private:
 public:
     Text() : font(std::make_shared<sf::Font>()){
         if (!font->loadFromFile("./ocr-a-extended.ttf")) {
-            throw std::runtime_error("The font was not found!\n");
+            throw missingFont("The font was not found!\n");
         }
         text.setFont(*font);
     }

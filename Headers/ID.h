@@ -15,6 +15,7 @@ public:
 
     Id(sf::Vector2f pos, const std::string& name, const std::string& fileName, int age, int height, int weight
        , float scaleX, float scaleY);
+    void setText() override;
     void SetFakeDistrict(const std::string& fakeDistrict);
 
     std::shared_ptr<Documente> clone() const override

@@ -1,5 +1,6 @@
 #include "../Headers/FakeCat.h"
 #include "../Headers/FalsifierFactory.h"
+#include "../Headers/Exceptions.h"
 
 #include <iostream>
 #include <chrono>
@@ -26,12 +27,12 @@ void FakeCat::createCurrentDocs(int levelNr)
         }
         else
         {
-            std::cerr << "No falsifier available for this document type.\n";
+            throw missingFalsifier("No falsifier available for this document type.\n");
         }
     }
     else
     {
-        std::cerr << "No documents available to falsify.\n";
+        throw missingDoc ("No documents available to falsify.\n");
     }
 }
 

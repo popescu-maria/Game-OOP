@@ -32,5 +32,5 @@ void Money::new_level()
 void Money::reset()
 {
     m_salary = 30;
-    m_salary = 0;
+    //m_salary = 0;
 }

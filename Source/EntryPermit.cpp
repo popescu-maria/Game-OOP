@@ -1,4 +1,5 @@
 #include "../Headers/EntryPermit.h"
+#include "../Headers/Exceptions.h"
 
 #include <utility>
 #include <random>
@@ -28,7 +29,7 @@ void EntryPermit::create_document()
 
     if (!m_sealTexture.loadFromFile("Img/setSeals1.png  "))
     {
-        throw std::runtime_error("Failed to load seal texture.");
+        throw missingTexture("Texture not found!\n");
     }
     const int sealWidth = 100;
     const int sealHeight = m_sealTexture.getSize().y;
@@ -41,6 +42,17 @@ void EntryPermit::create_document()
 
     setSeal(m_sealTexture, m_sealRect, sf::Vector2f(240.f, 75.f));
 
+}
+
+EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX = 0.5f,
+                         float scaleY = 0.5f)
+    : Documente(pos, name, fileName)
+{
+    setScale(scaleX, scaleY);
+}
+
+void EntryPermit::setText()
+{
     const sf::Vector2f sealOffset(100.f, 50.f);
     const sf::Vector2f nameOffset(10.f, 20.f);
     const sf::Vector2f passportNrOffset(10.f, 200.f);
@@ -67,15 +79,10 @@ void EntryPermit::create_document()
                    .setString(get_date()).build(), expDateOffset);
 }
 
-EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX = 0.5f,
-                         float scaleY = 0.5f)
-    : Documente(pos, name, fileName)
-{
-    setScale(scaleX, scaleY);
-}
 
 void EntryPermit::setFakeSeal(const sf::Sprite& fakeSprite)
 {
     m_sealSprite = fakeSprite;
+
 }
 

@@ -81,6 +81,8 @@ add_executable(${PROJECT_NAME}
         Source/EntryPermit.cpp
         Headers/FalsifierFactory.h
         Source/FalsifierFactory.cpp
+        Headers/Exceptions.h
+        Source/Exceptions.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

@@ -1,9 +1,10 @@
 #include "../Headers/DocFalsifier.h"
 #include "../Headers/Pasaport.h"
 #include "../Headers/ID.h"
-#include <random>
-
+#include "../Headers/Exceptions.h"
 #include "../Headers/EntryPermit.h"
+
+#include <random>
 
 void PasaportFalsifier::falsify(std::shared_ptr<Documente>& doc)
 {
@@ -20,7 +21,7 @@ void PasaportFalsifier::falsify(std::shared_ptr<Documente>& doc)
         auto fakeExpDate = std::chrono::year_month_day{today_sys_days - std::chrono::days(random_days)};
 
         passport->SetFakeDate(fakeExpDate);
-        //std::cout << "\ndata falsificata: " << fakeExpDate << std::endl;
+        std::cout << "\ndata falsificata: " << fakeExpDate << std::endl;
     }
 }
 
@@ -37,7 +38,7 @@ void IDFalsifier::falsify(std::shared_ptr<Documente>& doc)
         std::uniform_int_distribution<> nameDist(0, districts.size() - 1);
 
         id->SetFakeDistrict(districts[nameDist(gen)]);
-        //std::cout << "\ndistrict falsificata: " << districts[nameDist(gen)] << std::endl;
+        std::cout << "\ndistrict falsificata: " << districts[nameDist(gen)] << std::endl;
     }
 }
 
@@ -48,7 +49,7 @@ void PermitFalsifier::falsify(std::shared_ptr<Documente>& doc)
         sf::Texture fakeSealTexture;
         if (!fakeSealTexture.loadFromFile("Img/setSeals2.png"))
         {
-            throw std::runtime_error("Failed to load fake seal texture.");
+            throw missingTexture("Texture not found!\n");
         }
 
         const int sealWidth = 100;

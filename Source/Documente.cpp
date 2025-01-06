@@ -1,14 +1,14 @@
 #include <sstream>
 #include <utility>
 #include "../Headers/Documente.h"
-
+#include "../Headers/Exceptions.h"
 
 Documente::Documente(const sf::Vector2f pos, std::string name, const std::string& fileName): m_position(pos),
     m_name(std::move(name))
 {
     if (!m_texture.loadFromFile(fileName))
     {
-        throw std::runtime_error("Failed to load document texture!");
+        throw missingTexture("Texture not found!\n");
     }
     m_documentSprite.setTexture(m_texture);
     m_documentSprite.setPosition(m_position);
@@ -77,7 +77,7 @@ void Documente::AddText(const Text& text, const sf::Vector2f& offset)
 void Documente::checkBounds(sf::RenderWindow& window)
 {
     float topBound = 305.f;
-    float leftBound = 350.f;
+    float leftBound = 360.f;
 
     sf::Vector2u windowSize = window.getSize();
     auto rightBound = static_cast<float>(windowSize.x);

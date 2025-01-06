@@ -1,12 +1,11 @@
-#include <iostream>
 #include <vector>
 #include <random>
 
 #include "../Headers/Pasaport.h"
 #include "../Headers/ID.h"
 #include "../Headers/Cat.h"
-
 #include "../Headers/EntryPermit.h"
+#include "../Headers/Exceptions.h"
 
 void Cat::generateRandomCat()
 {
@@ -53,7 +52,9 @@ Cat::Cat(const sf::RenderWindow& window, const std::string& fileName): m_speed(1
     generateRandomCat();
     //adauga si celelalte atribute mai incolo, momeentan doar baza
     if (!m_baseTexture.loadFromFile(fileName))
-        std::cerr << "Can't load texture for the base of the cat" << std::endl;
+    {
+        throw missingTexture("Texture not found!\n");
+    }
     m_finalSprite.setTexture(m_baseTexture);
 
     m_position.x = (static_cast<float>(window.getSize().x) - m_finalSprite.getGlobalBounds().height) / 30.f;
@@ -81,13 +82,14 @@ void Cat::createCurrentDocs(int levelNr)
                                                  m_height, m_weight, 1.2f, 1.2f);  // Example parameters
         m_documente.emplace_back(prototypeId);
 
-        // auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit .png"
-        //                                                    , 0.9f, 0.9f);
-        // m_documente.emplace_back(EntryPermit);
+        auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
+                                                           , 0.9f, 0.9f);
+        m_documente.emplace_back(EntryPermit);
     }
     for (const auto& doc : m_documente)
     {
         doc->createDoc();
+        doc->setText();
     }
 }
 
