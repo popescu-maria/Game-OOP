@@ -83,6 +83,10 @@ add_executable(${PROJECT_NAME}
         Source/FalsifierFactory.cpp
         Headers/Exceptions.h
         Source/Exceptions.cpp
+        Headers/Button.h
+        Source/Button.cpp
+        Headers/ButtonState.h
+        Source/ButtonState.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

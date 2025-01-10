@@ -13,7 +13,7 @@ int CatManager::decideTypeOfCat()
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     double probability = dis(gen);
-    if (probability < 0.7)
+    if (probability < 0.6)
         return 1;
     return 0;
 
@@ -26,7 +26,8 @@ void CatManager::createNewCat(sf::RenderWindow& window, const std::string& fileN
 
     if(decideTypeOfCat())
         m_currentCat = std::make_shared<Cat>(window,fileName);
-    m_currentCat = std::make_shared<FakeCat>(window, fileName);
+    else
+        m_currentCat = std::make_shared<FakeCat>(window, fileName);
 
     //m_currentCat->setPosition();
     m_currentCat->createCurrentDocs(Nivel::GetLevelNr());

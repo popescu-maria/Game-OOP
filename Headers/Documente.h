@@ -48,7 +48,7 @@ public:
     void checkBounds(sf::RenderWindow& window);
     void move(sf::RenderWindow& window);
 
-    void drawDoc(sf::RenderWindow& window) const;
+    void drawDoc(sf::RenderWindow& window);
 
     virtual ~Documente() = default;
 };

@@ -37,8 +37,9 @@ void IDFalsifier::falsify(std::shared_ptr<Documente>& doc)
         static std::mt19937 gen(rd());
         std::uniform_int_distribution<> nameDist(0, districts.size() - 1);
 
-        id->SetFakeDistrict(districts[nameDist(gen)]);
-        std::cout << "\ndistrict falsificata: " << districts[nameDist(gen)] << std::endl;
+        const auto& fakeDistrict = districts[nameDist(gen)];
+        id->SetFakeDistrict(fakeDistrict);
+        std::cout << "\ndistrict falsificata: " << fakeDistrict << std::endl;
     }
 }
 

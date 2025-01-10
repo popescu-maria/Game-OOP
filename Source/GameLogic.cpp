@@ -74,10 +74,11 @@ void Game::resetGame()
     m_incercari = 0;
     m_isGameOver = false;
     m_CurrentNivel->ResetLevel();
+    //m_context(std::make_unique<OpenStampRack>());
 }
 
 Game::Game()
-    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png")
+    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png"), m_context(std::make_unique<OpenStampRack>())
 {
     loadBackground();
     m_CurrentNivel = std::make_shared<Nivel>();
@@ -90,12 +91,15 @@ void Game::draw()
     if (m_current_cat.getCurrentCat())
     {
         m_current_cat.getCurrentCat()->move();
+        //m_context.HandleClick(m_window);
         m_current_cat.getCurrentCat()->drawCurrentCat(m_window);
         for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
         {
             doc->move(m_window);
+            //doc->setText();
             doc->drawDoc(m_window);
         }
+        m_context.draw(m_window);
     }
 }
 
@@ -112,6 +116,12 @@ void Game::Play()
         {
             if (event.type == sf::Event::Closed)
                 m_window.close();
+
+            if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            {
+                sf::Vector2f mousePos = m_window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+                m_context.HandleClick(mousePos);
+            }
         }
         m_window.clear();
 

@@ -78,13 +78,13 @@ void Cat::createCurrentDocs(int levelNr)
         //auto pasaport = prototypePasaport->clone();
         m_documente.emplace_back(prototypePasaport);
 
-        auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
-                                                 m_height, m_weight, 1.2f, 1.2f);  // Example parameters
-        m_documente.emplace_back(prototypeId);
+        // auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+        //                                          m_height, m_weight, 1.2f, 1.2f);  // Example parameters
+        // m_documente.emplace_back(prototypeId);
 
-        auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
-                                                           , 0.9f, 0.9f);
-        m_documente.emplace_back(EntryPermit);
+        // auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
+        //                                                    , 0.9f, 0.9f);
+        // m_documente.emplace_back(EntryPermit);
     }
     for (const auto& doc : m_documente)
     {

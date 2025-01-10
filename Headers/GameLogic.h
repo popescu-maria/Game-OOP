@@ -3,13 +3,13 @@
 #include "CatManager.h"
 #include "Nivel.h"
 #include "Money.h"
-
+#include "ButtonState.h"
+#include "Button.h"
 //#include <map>
 //#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
-
 
 class Game
 {
@@ -25,6 +25,7 @@ class Game
     CatManager m_current_cat;
     std::vector<std::shared_ptr<Documente>> m_currentDocs;
     Money& money = Money::get_money();
+    Context m_context;
     //std::map<std::string, sf::Texture> m_textures;
     //void setTimeLimit();
     auto loadBackground() -> void;
