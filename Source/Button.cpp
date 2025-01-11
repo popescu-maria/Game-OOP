@@ -1,7 +1,5 @@
 #include "../Headers/Button.h"
 
-#include "../cmake-build-debug/_deps/sfml-src/src/SFML/Window/Win32/CursorImpl.hpp"
-
 OpenStampRack::OpenStampRack()
 {
     setText("Open Stamp\n   Rack");
@@ -27,7 +25,6 @@ void OpenStampRack::draw(sf::RenderWindow& window)
     window.draw(m_OpenText.getText());
 }
 
-
 EntryGranted::EntryGranted(const std::string& fileName)
 {
     if (!m_texture.loadFromFile(fileName))
@@ -35,7 +32,7 @@ EntryGranted::EntryGranted(const std::string& fileName)
         throw missingTexture("Texture not found!\n");
     }
     m_sprite.setTexture(m_texture);
-    m_sprite.setScale(0.5f, 0.5f);
+    m_sprite.setScale(0.45f, 0.45f);
     setText(" Entry\nGranted");
 }
 
@@ -78,7 +75,7 @@ EntryDenied::EntryDenied(const std::string& fileName)
         throw missingTexture("Texture not found!\n");
     }
     m_sprite.setTexture(m_texture);
-    m_sprite.setScale(0.5f, 0.5f);
+    m_sprite.setScale(0.45f, 0.45f);
     setText(" Entry\nDenied");
 }
 

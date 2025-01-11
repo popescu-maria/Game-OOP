@@ -47,7 +47,7 @@ void Cat::generateRandomCat()
 // std::string Cat::getPatternsFilename() const { return "Cat_" + m_patterns + ".png"; }
 // std::string Cat::getColorOfEyeFilename() const { return "Cat_" + m_color_of_eyes + ".png"; }
 
-Cat::Cat(const sf::RenderWindow& window, const std::string& fileName): m_speed(100.f)
+Cat::Cat(const sf::RenderWindow& window, const std::string& fileName)
 {
     generateRandomCat();
     //adauga si celelalte atribute mai incolo, momeentan doar baza
@@ -68,7 +68,7 @@ Cat::Cat(const sf::RenderWindow& window, const std::string& fileName): m_speed(1
     m_finalSprite.setScale(2.5f, 2.5f);
 }
 
-void Cat::createCurrentDocs(int levelNr)
+void Cat::makeDoc(int levelNr)
 {
     m_documente.clear();
     if (levelNr <= 5)
@@ -78,17 +78,26 @@ void Cat::createCurrentDocs(int levelNr)
         //auto pasaport = prototypePasaport->clone();
         m_documente.emplace_back(prototypePasaport);
 
-        // auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
-        //                                          m_height, m_weight, 1.2f, 1.2f);  // Example parameters
-        // m_documente.emplace_back(prototypeId);
+        auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+                                                m_height, m_weight, 1.2f, 1.2f); // Example parameters
+        m_documente.emplace_back(prototypeId);
 
-        // auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
-        //                                                    , 0.9f, 0.9f);
-        // m_documente.emplace_back(EntryPermit);
+        auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
+                                                           , 0.9f, 0.9f);
+        m_documente.emplace_back(EntryPermit);
     }
     for (const auto& doc : m_documente)
     {
         doc->createDoc();
+    }
+}
+
+
+void Cat::createCurrentDocs(int levelNr)
+{
+    makeDoc(levelNr);
+    for (const auto& doc : m_documente)
+    {
         doc->setText();
     }
 }
@@ -125,7 +134,6 @@ void Cat::move()
         m_finalSprite.setPosition(m_finalSprite.getPosition() + sf::Vector2f(1, 0));
     }
 }
-
 
 std::vector<std::shared_ptr<Documente>>& Cat::operator+=(const std::shared_ptr<Documente>& doc)
 {

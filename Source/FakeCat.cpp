@@ -10,7 +10,7 @@
 
 void FakeCat::createCurrentDocs(int levelNr)
 {
-    Cat::createCurrentDocs(levelNr);
+    makeDoc(levelNr);
 
     if (!m_documente.empty())
     {
@@ -34,8 +34,11 @@ void FakeCat::createCurrentDocs(int levelNr)
     {
         throw missingDoc ("No documents available to falsify.\n");
     }
+    for (const auto& doc : m_documente)
+    {
+        doc->setText();
+    }
 }
-
 
 bool FakeCat::IsDocValid()
 {

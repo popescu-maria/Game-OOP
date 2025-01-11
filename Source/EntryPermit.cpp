@@ -40,8 +40,6 @@ void EntryPermit::create_document()
 
     m_sealRect = sf::IntRect(randomSealIndex * sealWidth, 0, sealWidth, sealHeight);
 
-    setSeal(m_sealTexture, m_sealRect, sf::Vector2f(240.f, 75.f));
-
 }
 
 EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX = 0.5f,
@@ -53,14 +51,12 @@ EntryPermit::EntryPermit(sf::Vector2f pos, const std::string& name, const std::s
 
 void EntryPermit::setText()
 {
-    const sf::Vector2f sealOffset(100.f, 50.f);
-    const sf::Vector2f nameOffset(10.f, 20.f);
-    const sf::Vector2f passportNrOffset(10.f, 200.f);
-    const sf::Vector2f purposeOffset(10.f, 230.f);
-    const sf::Vector2f durationOffset(10.f, 260.f);
-    const sf::Vector2f expDateOffset(10.f, 290.f);
+    const sf::Vector2f nameOffset(90.f, 140.f);
+    const sf::Vector2f passportNrOffset(90.f, 215.f);
+    const sf::Vector2f purposeOffset(100.f, 245.f);
+    const sf::Vector2f durationOffset(100.f, 270.f);
+    const sf::Vector2f expDateOffset(100.f, 300.f);
 
-    //m_sealSprite.setPosition(m_documentSprite.getPosition() + sealOffset);
     TextBuilder builder;
     AddText(builder.setFont().setSize(30).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + nameOffset)
@@ -77,12 +73,12 @@ void EntryPermit::setText()
     AddText(builder.setFont().setSize(20).setCol(sf::Color::Black)
                    .setPos(m_documentSprite.getPosition() + expDateOffset)
                    .setString(get_date()).build(), expDateOffset);
+    setSeal(m_sealTexture, m_sealRect, sf::Vector2f(200.f, 60.f));
 }
 
 
-void EntryPermit::setFakeSeal(const sf::Sprite& fakeSprite)
+void EntryPermit::setFakeSeal(const sf::Texture& fakeTexture)
 {
-    m_sealSprite = fakeSprite;
-
+    m_sealTexture = fakeTexture;
+    setSeal(m_sealTexture, m_sealRect, sf::Vector2f(200.f, 60.f));
 }
-

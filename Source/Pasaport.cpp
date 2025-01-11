@@ -47,7 +47,6 @@ void Pasaport::setText()
 void Pasaport::SetFakeDate(const std::chrono::year_month_day& fakeDate)
 {
     m_expDate = fakeDate;
-    setText();
 }
 
 Pasaport::Pasaport(const sf::Vector2f pos, std::string name, const std::string& fileName, const int age, const char gen,

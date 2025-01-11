@@ -21,7 +21,7 @@ void PasaportFalsifier::falsify(std::shared_ptr<Documente>& doc)
         auto fakeExpDate = std::chrono::year_month_day{today_sys_days - std::chrono::days(random_days)};
 
         passport->SetFakeDate(fakeExpDate);
-        std::cout << "\ndata falsificata: " << fakeExpDate << std::endl;
+        std::cout << "\ndata falsificata" << std::endl;
     }
 }
 
@@ -43,6 +43,7 @@ void IDFalsifier::falsify(std::shared_ptr<Documente>& doc)
     }
 }
 
+
 void PermitFalsifier::falsify(std::shared_ptr<Documente>& doc)
 {
     if (auto entryPermit = std::dynamic_pointer_cast<EntryPermit>(doc))
@@ -53,22 +54,7 @@ void PermitFalsifier::falsify(std::shared_ptr<Documente>& doc)
             throw missingTexture("Texture not found!\n");
         }
 
-        const int sealWidth = 100;
-        const int sealHeight = fakeSealTexture.getSize().y;
-
-        const int numSeals = fakeSealTexture.getSize().x / sealWidth;
-
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> sealDist(0, numSeals - 1);
-        int randomSealIndex = sealDist(gen);
-
-        sf::IntRect sealRect(randomSealIndex * sealWidth, 0, sealWidth, sealHeight);
-
-        sf::Sprite fakeSealSprite;
-        fakeSealSprite.setTexture(fakeSealTexture);
-        fakeSealSprite.setTextureRect(sealRect);
-
-        entryPermit->setFakeSeal(fakeSealSprite);
+        entryPermit->setFakeSeal(fakeSealTexture);
+        std::cout << "\nfake seal";
     }
 }

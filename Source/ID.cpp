@@ -48,7 +48,6 @@ void Id::setText()
 void Id::SetFakeDistrict(const std::string& fakeDistrict)
 {
     m_district = fakeDistrict;
-    setText();
 }
 
 Id::Id(const sf::Vector2f pos, const std::string& name, const std::string& fileName, const int age, const int height,

@@ -103,7 +103,6 @@ void Game::draw()
     }
 }
 
-
 void Game::Play()
 {
     sf::Clock clock;

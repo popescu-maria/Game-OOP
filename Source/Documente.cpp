@@ -146,7 +146,6 @@ void Documente::move(sf::RenderWindow& window)
 
 void Documente::drawDoc(sf::RenderWindow& window)
 {
-    //setText();
     window.draw(m_documentSprite);
 
     for (const auto& [text, offset] : m_textsWithOffsets) {

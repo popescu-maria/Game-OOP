@@ -17,7 +17,7 @@ public:
 
     EntryPermit(sf::Vector2f pos, const std::string& name, const std::string& fileName, float scaleX, float scaleY);
     void setText() override;
-    void setFakeSeal(const sf::Sprite& fakeSprite);
+    void setFakeSeal(const sf::Texture& fakeTexture);
 
     std::shared_ptr<Documente> clone() const override
     {

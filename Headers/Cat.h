@@ -18,7 +18,7 @@ private:
 
     bool m_isMoving{false};
     const float m_moveDistance{100.f};
-    const float m_speed{};
+    //const float m_speed{};
     float targetX{0.f};
 
     // std::string m_patterns;
@@ -38,6 +38,7 @@ private:
 
 protected:
     std::vector<std::shared_ptr<Documente>> m_documente;
+    void makeDoc(int levelNr);
 
 public:
     Cat() { generateRandomCat(); };
@@ -59,5 +60,3 @@ public:
 
     virtual ~Cat() = default;
 };
-
-

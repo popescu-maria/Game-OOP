@@ -14,7 +14,7 @@ int CatManager::decideTypeOfCat()
 
     double probability = dis(gen);
     if (probability < 0.6)
-        return 1;
+        return 0;
     return 0;
 
 }

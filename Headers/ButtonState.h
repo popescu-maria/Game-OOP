@@ -24,7 +24,7 @@ class Context
 private:
     std::unique_ptr<State> m_state;
     sf::RectangleShape m_button;
-    Text m_buttonText;
+    //Text m_buttonText;
 
 public:
     explicit Context(std::unique_ptr<State> state);
