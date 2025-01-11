@@ -87,6 +87,8 @@ add_executable(${PROJECT_NAME}
         Source/Button.cpp
         Headers/ButtonState.h
         Source/ButtonState.cpp
+        Headers/RuleBook.h
+        Source/RuleBook.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

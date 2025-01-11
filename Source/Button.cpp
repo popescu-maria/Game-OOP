@@ -10,6 +10,16 @@ void OpenStampRack::handleClick()
     m_context->TransitionTo(std::make_unique<EntryGranted>("Img/ENTRYGRANTED.png"));
 }
 
+void OpenStampRack::setupButton()
+{
+    m_button.setSize({150.f, 60.f});
+    m_button.setFillColor(sf::Color::White);
+    m_button.setPosition({1050.f, 245.f});
+
+    m_button.setOutlineColor(sf::Color::Black);
+    m_button.setOutlineThickness(4.f);
+}
+
 void OpenStampRack::setText(const std::string& textString)
 {
     TextBuilder builder;
@@ -49,6 +59,16 @@ void EntryGranted::setText(const std::string& textString)
 void EntryGranted::handleClick()
 {
     m_context->TransitionTo(std::make_unique<EntryDenied>("Img/ENTRYDENIED.png"));
+}
+
+void EntryGranted::setupButton()
+{
+    m_button.setSize({150.f, 60.f});
+    m_button.setFillColor(sf::Color::White);
+    m_button.setPosition({1050.f, 245.f});
+
+    m_button.setOutlineColor(sf::Color::Black);
+    m_button.setOutlineThickness(4.f);
 }
 
 void EntryGranted::draw(sf::RenderWindow& window)
@@ -92,6 +112,16 @@ void EntryDenied::setText(const std::string& textString)
 void EntryDenied::handleClick()
 {
     m_context->TransitionTo(std::make_unique<OpenStampRack>());
+}
+
+void EntryDenied::setupButton()
+{
+    m_button.setSize({150.f, 60.f});
+    m_button.setFillColor(sf::Color::White);
+    m_button.setPosition({1050.f, 245.f});
+
+    m_button.setOutlineColor(sf::Color::Black);
+    m_button.setOutlineThickness(4.f);
 }
 
 void EntryDenied::draw(sf::RenderWindow& window)

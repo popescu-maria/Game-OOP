@@ -47,12 +47,12 @@ std::string Documente::get_date() const
     return date_stream.str();
 }
 
-sf::Vector2f Documente::getSize() const
+sf::FloatRect Documente::getBounds() const
 {
-    return {m_documentSprite.getGlobalBounds().width, m_documentSprite.getGlobalBounds().height};
+
+    return m_documentSprite.getGlobalBounds();
 }
 
-sf::Vector2f Documente::getPos() const { return m_position; }
 
 void Documente::setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset)
 {

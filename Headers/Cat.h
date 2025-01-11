@@ -18,7 +18,7 @@ private:
 
     bool m_isMoving{false};
     const float m_moveDistance{100.f};
-    //const float m_speed{};
+    const float m_distance{};
     float targetX{0.f};
 
     // std::string m_patterns;
@@ -48,12 +48,15 @@ public:
     //clears the m_documents vector and based on what level you are it gives the cat more or less documents
     //that the player has to check
     virtual void createCurrentDocs(int levelNr);
+    void clearDoc();
     void drawCurrentCat(sf::RenderWindow& window) const;
     virtual bool IsDocValid();
     [[nodiscard]] std::vector<std::shared_ptr<Documente>> getDocumente() const;
 
     void setMoveTarget();
     void move();
+
+    void leave();
 
     std::vector<std::shared_ptr<Documente>>& operator+=(const std::shared_ptr<Documente>& doc);
     friend std::ostream& operator<<(std::ostream& os, const Cat& cat);

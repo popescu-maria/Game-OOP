@@ -18,6 +18,8 @@ class Game
     sf::Sprite m_backgroundSprite;
 
     bool m_isGameOver{false};
+    bool docsCreated = false;
+    bool docsChecked = false;
     int m_incercari{0};
     sf::Clock m_clock;
 
@@ -26,18 +28,18 @@ class Game
     std::vector<std::shared_ptr<Documente>> m_currentDocs;
     Money& money = Money::get_money();
     Context m_context;
+    Context m_RBcontext;
     //std::map<std::string, sf::Texture> m_textures;
     //void setTimeLimit();
     auto loadBackground() -> void;
     //[[nodiscard]] bool checkPlayerDecision() const;
+    void handlePlayerChoice();
     [[nodiscard]] bool isGameOver() const;
     void resetGame();
-
+    void draw();
 public:
     Game();
     //void loadTextures();
-
-    void draw();
     void Play();
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 

@@ -47,7 +47,7 @@ void Cat::generateRandomCat()
 // std::string Cat::getPatternsFilename() const { return "Cat_" + m_patterns + ".png"; }
 // std::string Cat::getColorOfEyeFilename() const { return "Cat_" + m_color_of_eyes + ".png"; }
 
-Cat::Cat(const sf::RenderWindow& window, const std::string& fileName)
+Cat::Cat(const sf::RenderWindow& window, const std::string& fileName) : m_distance(300.f)
 {
     generateRandomCat();
     //adauga si celelalte atribute mai incolo, momeentan doar baza
@@ -92,6 +92,11 @@ void Cat::makeDoc(int levelNr)
     }
 }
 
+void Cat::clearDoc()
+{
+    m_documente.clear();
+}
+
 
 void Cat::createCurrentDocs(int levelNr)
 {
@@ -105,6 +110,13 @@ void Cat::createCurrentDocs(int levelNr)
 void Cat::drawCurrentCat(sf::RenderWindow& window) const
 {
     window.draw(m_finalSprite);
+    if (!m_documente.empty())
+    {
+        for (const auto& doc : m_documente)
+        {
+            doc->drawDoc(window);
+        }
+    }
 }
 
 bool Cat::IsDocValid()
@@ -134,6 +146,19 @@ void Cat::move()
         m_finalSprite.setPosition(m_finalSprite.getPosition() + sf::Vector2f(1, 0));
     }
 }
+
+void Cat::leave()
+{
+    if (m_position.x + m_finalSprite.getGlobalBounds().width <= 0)
+    {
+        return;
+    }
+
+    m_position.x -= m_distance;
+
+    m_finalSprite.setPosition(m_position);
+}
+
 
 std::vector<std::shared_ptr<Documente>>& Cat::operator+=(const std::shared_ptr<Documente>& doc)
 {

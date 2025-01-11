@@ -1,5 +1,3 @@
-
-#include <Helper.h>
 #include <iostream>
 
 #include "Headers/FakeCat.h"

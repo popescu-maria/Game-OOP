@@ -18,7 +18,7 @@ public:
     explicit CatManager(sf::RenderWindow& window, const std::string& fileName);
 
     std::shared_ptr<Cat> getCurrentCat();
-    void checkCat() const;
+    void replaceCat(sf::RenderWindow& window, const std::string& fileName);
     void nextLevel(sf::RenderWindow& window, const std::string& fileName);
     static int getCatsCount();
 

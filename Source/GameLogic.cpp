@@ -1,6 +1,8 @@
 #include "../Headers/GameLogic.h"
 #include "../Headers/FakeCat.h"
 #include "../Headers/Exceptions.h"
+#include "../Headers/RuleBook.h"
+#include "../Headers/Pasaport.h"
 
 #include <iostream>
 #include <ostream>
@@ -78,11 +80,21 @@ void Game::resetGame()
 }
 
 Game::Game()
-    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png"), m_context(std::make_unique<OpenStampRack>())
+    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png")
+        , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
 {
     loadBackground();
     m_CurrentNivel = std::make_shared<Nivel>();
 }
+
+void Game::handlePlayerChoice()
+{
+    m_current_cat.getCurrentCat()->clearDoc();
+    //docsCreated = false;
+    m_context.TransitionTo(std::make_unique<OpenStampRack>());
+    m_current_cat.getCurrentCat()->leave();
+}
+
 
 void Game::draw()
 {
@@ -90,16 +102,15 @@ void Game::draw()
 
     if (m_current_cat.getCurrentCat())
     {
-        m_current_cat.getCurrentCat()->move();
-        //m_context.HandleClick(m_window);
+        //m_current_cat.getCurrentCat()->move();
         m_current_cat.getCurrentCat()->drawCurrentCat(m_window);
         for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
         {
             doc->move(m_window);
-            //doc->setText();
-            doc->drawDoc(m_window);
+            //doc->drawDoc(m_window);
         }
         m_context.draw(m_window);
+        m_RBcontext.draw(m_window);
     }
 }
 
@@ -119,20 +130,48 @@ void Game::Play()
             if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
                 sf::Vector2f mousePos = m_window.mapPixelToCoords({event.mouseButton.x, event.mouseButton.y});
+
                 m_context.HandleClick(mousePos);
+                m_RBcontext.HandleClick(mousePos);
+
+                if (m_current_cat.getCurrentCat())
+                {
+                    for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
+                    {
+                        if (auto* pasaport = dynamic_cast<Pasaport*>(doc.get())){
+                            if(pasaport->getBounds().contains(mousePos))
+                            {
+                                if (dynamic_cast<EntryGranted*>(m_context.getCurrentState()) ||
+                                    dynamic_cast<EntryDenied*>(m_context.getCurrentState()))
+                                {
+                                    std::cout<<"\nam ales daca e bun sau fals";
+                                    //m_current_cat.getCurrentCat()->clearDocuments();
+                                    handlePlayerChoice();
+                                    docsChecked = true;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (docsChecked && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::N)
+            {
+                m_current_cat.replaceCat(m_window, "Img/CatShadow.png");
+                docsCreated = false;
+                docsChecked = false;
             }
         }
+
         m_window.clear();
 
         if (!isGameOver())
         {
-            static bool docsCreated = false;
             if (!docsCreated)
             {
                 m_current_cat.getCurrentCat()->createCurrentDocs(Nivel::GetLevelNr());
                 docsCreated = true; // Avoid re-creating documents
             }
-            m_current_cat.checkCat();
             draw();
         }
 

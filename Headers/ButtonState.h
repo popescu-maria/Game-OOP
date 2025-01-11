@@ -9,6 +9,7 @@ class State
 {
 protected:
     Context* m_context = nullptr;
+    sf::RectangleShape m_button;
 
 public:
     virtual ~State() = default;
@@ -16,16 +17,15 @@ public:
     void set_context(Context* context) { m_context = context; }
 
     virtual void handleClick() = 0;
+    virtual void setupButton() = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
+    virtual sf::RectangleShape& getButton() { return m_button; }
 };
 
 class Context
 {
 private:
     std::unique_ptr<State> m_state;
-    sf::RectangleShape m_button;
-    //Text m_buttonText;
-
 public:
     explicit Context(std::unique_ptr<State> state);
 
@@ -35,4 +35,5 @@ public:
 
     void HandleClick(const sf::Vector2f& mousePosition) const;
     void draw(sf::RenderWindow& window) const;
+    [[nodiscard]] State* getCurrentState() const { return m_state.get(); }
 };

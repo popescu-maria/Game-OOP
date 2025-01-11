@@ -14,7 +14,7 @@ int CatManager::decideTypeOfCat()
 
     double probability = dis(gen);
     if (probability < 0.6)
-        return 0;
+        return 1;
     return 0;
 
 }
@@ -29,7 +29,6 @@ void CatManager::createNewCat(sf::RenderWindow& window, const std::string& fileN
     else
         m_currentCat = std::make_shared<FakeCat>(window, fileName);
 
-    //m_currentCat->setPosition();
     m_currentCat->createCurrentDocs(Nivel::GetLevelNr());
 }
 
@@ -42,17 +41,9 @@ std::shared_ptr<Cat> CatManager::getCurrentCat()
 {
     return m_currentCat;
 }
-
-
-void CatManager::checkCat() const
+void CatManager::replaceCat(sf::RenderWindow& window, const std::string& fileName)
 {
-    if(m_currentCat)
-    {
-        for(const auto &e: m_currentCat->getDocumente())
-            if(e && m_currentCat->IsDocValid())
-                m_CatsCount++;
-        //createNewCat();
-    }
+    createNewCat(window, fileName);
 }
 
 void CatManager::nextLevel(sf::RenderWindow& window, const std::string& fileName)

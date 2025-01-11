@@ -37,8 +37,7 @@ public:
     virtual std::shared_ptr<Documente> clone() const = 0;
 
     [[nodiscard]] std::string get_date() const;
-    sf::Vector2f getSize() const;
-    sf::Vector2f getPos() const;
+    sf::FloatRect getBounds() const;
     void setScale(float x, float y);
     [[maybe_unused]] void setSeal(const sf::Texture& sealTexture, const sf::IntRect& rect, const sf::Vector2f& offset);
 

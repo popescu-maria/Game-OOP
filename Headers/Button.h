@@ -12,6 +12,7 @@ private:
 public:
     OpenStampRack();
     void handleClick() override;
+    void setupButton() override;
     void setText(const std::string& text);
     void draw(sf::RenderWindow& window) override;
 };
@@ -28,6 +29,7 @@ private:
 public:
     explicit EntryGranted(const std::string& fileName);
     void handleClick() override;
+    void setupButton() override;
     void setText(const std::string& text);
     void draw(sf::RenderWindow& window) override;
 };
@@ -44,6 +46,7 @@ private:
 public:
     explicit EntryDenied(const std::string& fileName);
     void handleClick() override;
+    void setupButton() override;
     void setText(const std::string& text);
     void draw(sf::RenderWindow& window) override;
 };
