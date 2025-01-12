@@ -2,17 +2,26 @@
 
 Un joc asemanator cu Papers, Please doar ca pisicile au acaparat tara. Tu iei rolul unui ofiter pisica, desemnat sa determine cine are voie sa intre in tara pisicilor. Dar atentie!! Oamenii au ajuns sa se deghizeze mult prea bine in pisici, si este rolul tau sa detectezi pasapoartele false ale acestora.
 
-### Important!
-Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
-Codul generat pus "ca să fie"/pe care nu îl înțelegeți se punctează doar pentru puncte bonus, doar în contextul
-în care oferă funcționalități ajutătoare și doar dacă are sens.
+## Instructiuni:
 
-O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie de apeluri proxy către cod generat.
+In primul nivel: Pasapoartele invalide au data expirata (in functie de data actuala)  
+In al doilea nivel: Analog + Id urile pot sa aiba districtul fake (verifi in RuleBook pentru lista
+de districte reale)  
+In al treilea nivel: Analog + seal ul poate sa fie fake (verifica rulebook)
 
-### Cerințe modele de limbaj la nivel de semestru
-- [ ] minim o funcționalitate majoritar doar cu LLM
-- [ ] minim 2-3 funcționalități ~50% voi, ~50% LLM-ul
-- [ ] minim 2-3 funcționalități suficient de complicate pe care un LLM nu le poate implementa
+Apesi pe butonul din dreapta pentru a selecta daca vrei sa dai Granted sau Denied la pasaport (acte in general)
+Apoi dupa ce ai selectat apesi pe pasaport pentru confirmare.  
+Press n for next cat.  
+Ai un timp in fiecare zi pentru a verifica cat mai multe pisici.  
+Press enter to go to the next level.
+
+### Resurse:
+
+https://papers.floppa.hair/  
+https://papers-please.en.softonic.com/  
+https://opengameart.org/content/cat-sprites  
+https://www.freefontdownload.org/en/ocr-a-extended.font  
+https://paperspleaseloc.github.io/
 
 ### Tema 0
 
@@ -56,7 +65,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de
     bază, eventual prin interfața non-virtuală din bază
-    - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
+    - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
 - [x] excepții
@@ -69,9 +78,10 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 - [x] STL
 - [x] cât mai multe `const`
 - [x] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
-- [ ] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie
+- [x] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3
+  derivate deja adăugate** din aceeași ierarhie
   - noua derivată nu poate fi una existentă care a fost ștearsă și adăugată din nou
-- [ ] tag de `git`: de exemplu `v0.2`
+- [x] tag de `git`: de exemplu `v0.2`
 
 ## Tema 3
 
