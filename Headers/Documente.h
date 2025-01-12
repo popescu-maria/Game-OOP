@@ -34,7 +34,7 @@ public:
     Documente(const Documente& oth);
     Documente& operator=(const Documente& oth);
     Documente(sf::Vector2f pos, std::string name, const std::string& fileName);
-    virtual std::shared_ptr<Documente> clone() const = 0;
+    //virtual std::shared_ptr<Documente> clone() const = 0;
 
     [[nodiscard]] std::string get_date() const;
     sf::FloatRect getBounds() const;

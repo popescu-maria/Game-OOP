@@ -53,23 +53,24 @@ void OpenRB::setupButton()
     m_button.setFillColor(sf::Color::White);
     m_button.setPosition({10.f, 580.f});
 
-    m_sprite.setPosition(15.f,620.f);
+    m_sprite.setPosition(15.f, 620.f);
 }
 
 void OpenRB::setText()
 {
     std::ostringstream oss;
     oss << "Valid districts:\n";
-    for (const auto& district : m_validDistricts) {
+    for (const auto& district : m_validDistricts)
+    {
         oss << "- " << district << '\n';
     }
 
     TextBuilder builder;
     m_districtText = builder.setString(oss.str())
-                             .setSize(16)
-                             .setCol(sf::Color::Black)
-                             .setPos(200.f, 576.f)
-                             .build();
+                            .setSize(16)
+                            .setCol(sf::Color::Black)
+                            .setPos(200.f, 576.f)
+                            .build();
 }
 
 

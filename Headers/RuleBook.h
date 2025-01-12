@@ -7,6 +7,7 @@ class ClosedRB : public State
 private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
+
 public:
     explicit ClosedRB(const std::string& fileName);
     void handleClick() override;
@@ -26,6 +27,7 @@ private:
         "TORCOVIA", "MIORLAIA", "PADURENI", "MUSTACESTI",
         "GHEARASOV", "PORT MIAUNOV", "TUNDRA NORDICA", "FELINOVA", "PISICIENI"
     };
+
 public:
     explicit OpenRB(const std::string& fileName);
     void handleClick() override;

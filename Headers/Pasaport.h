@@ -14,9 +14,4 @@ public:
              float scaleY);
     void setText() override;
     void SetFakeDate(const std::chrono::year_month_day& fakeDate);
-
-    std::shared_ptr<Documente> clone() const override
-    {
-        return std::make_shared<Pasaport>(*this);
-    }
 };

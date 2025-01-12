@@ -149,15 +149,6 @@ std::vector<std::shared_ptr<Documente>> Cat::getDocumente() const
     return m_documente;
 }
 
-void Cat::setMoveTarget()
-{
-    if (!m_isMoving)
-    {
-        targetX = m_moveDistance;
-        //m_isMoving = true;
-    }
-}
-
 void Cat::move()
 {
     //setMoveTarget();

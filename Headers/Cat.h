@@ -53,9 +53,7 @@ public:
     virtual bool IsDocValid();
     [[nodiscard]] std::vector<std::shared_ptr<Documente>> getDocumente() const;
 
-    void setMoveTarget();
     void move();
-
     void leave();
 
     std::vector<std::shared_ptr<Documente>>& operator+=(const std::shared_ptr<Documente>& doc);
