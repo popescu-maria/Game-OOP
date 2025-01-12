@@ -63,15 +63,10 @@ add_executable(${PROJECT_NAME}
         Headers/GameLogic.h
         Headers/FakeCat.h
         Source/FakeCat.cpp
-        Headers/Nivel.h
-        Source/Nivel.cpp
         Headers/Documente.h
         Source/Documente.cpp
         Headers/CatManager.h
         Source/CatManager.cpp
-        Headers/Money.h
-        Headers/Money.h
-        Source/Money.cpp
         Headers/Text.h
         Headers/ID.h
         Source/ID.cpp

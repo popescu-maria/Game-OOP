@@ -13,43 +13,50 @@ int CatManager::decideTypeOfCat()
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
     double probability = dis(gen);
-    if (probability < 0.6)
+    if (probability < 0.5)
         return 1;
     return 0;
 
 }
 
-void CatManager::createNewCat(sf::RenderWindow& window, const std::string& fileName)
+void CatManager::createNewCat(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
 {
-    //fac geturile pentru filenames publice ca sa dau layer peste pisica de baza
-    //std::string CurrentCatTexture = "./Cat" + std::to_string(m_currentCat->getColorFilename) + ".png";
 
     if(decideTypeOfCat())
         m_currentCat = std::make_shared<Cat>(window,fileName);
     else
         m_currentCat = std::make_shared<FakeCat>(window, fileName);
 
-    m_currentCat->createCurrentDocs(Nivel::GetLevelNr());
+    //AICII
+    //ACIIIIII
+
+
+
+
+    m_currentCat->createCurrentDocs(nivelNr);
+
+
+
 }
 
-CatManager::CatManager(sf::RenderWindow& window, const std::string& fileName)
+CatManager::CatManager(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
 {
-    createNewCat(window, fileName);
+    createNewCat(window, fileName, nivelNr);
 }
 
 std::shared_ptr<Cat> CatManager::getCurrentCat()
 {
     return m_currentCat;
 }
-void CatManager::replaceCat(sf::RenderWindow& window, const std::string& fileName)
+void CatManager::replaceCat(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
 {
-    createNewCat(window, fileName);
+    createNewCat(window, fileName, nivelNr);
 }
 
-void CatManager::nextLevel(sf::RenderWindow& window, const std::string& fileName)
+void CatManager::nextLevel(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
 {
     m_CatsCount = 0;
-    createNewCat(window, fileName);
+    createNewCat(window, fileName, nivelNr);
 }
 
 int CatManager::getCatsCount()

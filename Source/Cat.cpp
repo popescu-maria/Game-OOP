@@ -50,7 +50,6 @@ void Cat::generateRandomCat()
 Cat::Cat(const sf::RenderWindow& window, const std::string& fileName) : m_distance(300.f)
 {
     generateRandomCat();
-    //adauga si celelalte atribute mai incolo, momeentan doar baza
     if (!m_baseTexture.loadFromFile(fileName))
     {
         throw missingTexture("Texture not found!\n");
@@ -68,24 +67,45 @@ Cat::Cat(const sf::RenderWindow& window, const std::string& fileName) : m_distan
     m_finalSprite.setScale(2.5f, 2.5f);
 }
 
-void Cat::makeDoc(int levelNr)
+void Cat::makeDoc(const int levelNr)
 {
     m_documente.clear();
-    if (levelNr <= 5)
+    switch (levelNr)
     {
-        auto prototypePasaport = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
-                                                            m_age, m_gender, 0.35f, 0.35f);
-        //auto pasaport = prototypePasaport->clone();
-        m_documente.emplace_back(prototypePasaport);
-
-        auto prototypeId = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
-                                                m_height, m_weight, 1.2f, 1.2f); // Example parameters
-        m_documente.emplace_back(prototypeId);
-
-        auto EntryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png"
-                                                           , 0.9f, 0.9f);
-        m_documente.emplace_back(EntryPermit);
+    case 2: {
+            auto pasaport = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
+                                                       m_age, m_gender, 0.35f, 0.35f);
+            m_documente.emplace_back(pasaport);
+            break;
     }
+    case 4: {
+            auto pasaport2 = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
+                                                        m_age, m_gender, 0.35f, 0.35f);
+            m_documente.emplace_back(pasaport2);
+
+            auto id = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+                                           m_height, m_weight, 1.2f, 1.2f); // Example parameters
+            m_documente.emplace_back(id);
+            break;
+    }
+    case 6: {
+            auto pasaport3 = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
+                                                        m_age, m_gender, 0.35f, 0.35f);
+            m_documente.emplace_back(pasaport3);
+
+            auto id2 = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+                                            m_height, m_weight, 1.2f, 1.2f); // Example parameters
+            m_documente.emplace_back(id2);
+
+            auto entryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png",
+                                                               0.9f, 0.9f);
+            m_documente.emplace_back(entryPermit);
+            break;
+    }
+    default:
+        break;
+    }
+
     for (const auto& doc : m_documente)
     {
         doc->createDoc();
