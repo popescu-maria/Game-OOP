@@ -3,13 +3,13 @@
 #include "CatManager.h"
 #include "ButtonState.h"
 #include "Button.h"
-//#include <map>
-//#include <SFML/Window.hpp>
+#include "Text.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <vector>
 
-enum GameStates {
+enum GameStates
+{
     INTRO = 1,
     NIVEL_1 = 2,
     NIVEL_1_END = 3,
@@ -24,10 +24,18 @@ class Game
     sf::RenderWindow m_window;
     sf::Texture m_backgroundTexture;
     sf::Sprite m_backgroundSprite;
+    Text m_introText;
+    Text m_startText;
+
+    //int m_scor = 0;
+    //int m_pisiciTotale = 0;
+    int m_pisiciCorecte = 0;
 
     bool m_isGameOver{false};
     bool docsChecked = false;
+    bool StartGameCleared = false;
     int m_incercari{0};
+    const float m_levelTimeLimit = 30.0f;
     //sf::Clock m_clock;
 
     //std::shared_ptr<Nivel> m_CurrentNivel;
@@ -37,15 +45,20 @@ class Game
     Context m_RBcontext;
     auto loadBackground() -> void;
     int GameState = INTRO;
-    //[[nodiscard]] bool checkPlayerDecision() const;
+
+    [[nodiscard]] bool checkPlayerDecision() const;
     void handlePlayerChoice();
     [[nodiscard]] bool isGameOver() const;
     void resetGame();
     void HandleEvents(const sf::Event& event);
-    void handleNivelEndInput();
     void drawIntro();
+    bool introDisplayed = false;
     void drawNivelEnd();
+    void drawGameOver();
     void draw();
+
+    //void calcPisiciTotale(int pisiciZi);
+    //void calcScorFinal(int ScorZi);
 
 public:
     Game();
