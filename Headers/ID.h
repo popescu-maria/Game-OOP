@@ -17,7 +17,9 @@ public:
        , float scaleX, float scaleY);
     void setText() override;
     void SetFakeDistrict(const std::string& fakeDistrict);
-    std::shared_ptr<DocFalsifier> getFalsifier() const override {
+
+    std::shared_ptr<DocFalsifier> getFalsifier() const override
+    {
         return std::make_shared<IDFalsifier>();
     }
 };

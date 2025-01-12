@@ -15,7 +15,9 @@ public:
              float scaleY);
     void setText() override;
     void SetFakeDate(const std::chrono::year_month_day& fakeDate);
-    std::shared_ptr<DocFalsifier> getFalsifier() const override {
+
+    std::shared_ptr<DocFalsifier> getFalsifier() const override
+    {
         return std::make_shared<PasaportFalsifier>();
     }
 };

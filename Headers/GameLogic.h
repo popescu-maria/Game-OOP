@@ -33,7 +33,7 @@ class Game
 
     bool m_isGameOver{false};
     bool docsChecked = false;
-    const float m_levelTimeLimit = 60.0f;
+    const float m_levelTimeLimit = 30.0f;
     //sf::Clock m_clock;
 
     //std::shared_ptr<Nivel> m_CurrentNivel;

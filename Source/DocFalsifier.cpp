@@ -21,7 +21,6 @@ void PasaportFalsifier::falsify(std::shared_ptr<Documente>& doc)
         auto fakeExpDate = std::chrono::year_month_day{today_sys_days - std::chrono::days(random_days)};
 
         passport->SetFakeDate(fakeExpDate);
-        std::cout << "\ndata falsificata" << std::endl;
     }
 }
 
@@ -39,7 +38,6 @@ void IDFalsifier::falsify(std::shared_ptr<Documente>& doc)
 
         const auto& fakeDistrict = districts[nameDist(gen)];
         id->SetFakeDistrict(fakeDistrict);
-        std::cout << "\ndistrict falsificata: " << fakeDistrict << std::endl;
     }
 }
 
@@ -55,6 +53,5 @@ void PermitFalsifier::falsify(std::shared_ptr<Documente>& doc)
         }
 
         entryPermit->setFakeSeal(fakeSealTexture);
-        std::cout << "\nfake seal";
     }
 }
