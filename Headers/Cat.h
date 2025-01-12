@@ -16,10 +16,7 @@ private:
     sf::RenderTexture m_renderTexture;
     sf::Vector2<float> m_position{0.f, 0.f};
 
-    bool m_isMoving{false};
-    const float m_moveDistance{100.f};
     const float m_distance{};
-    float targetX{0.f};
 
     // std::string m_patterns;
     // std::string m_color;
