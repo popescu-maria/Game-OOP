@@ -33,7 +33,6 @@ class Game
 
     bool m_isGameOver{false};
     bool docsChecked = false;
-    bool StartGameCleared = false;
     int m_incercari{0};
     const float m_levelTimeLimit = 30.0f;
     //sf::Clock m_clock;
@@ -49,7 +48,7 @@ class Game
     [[nodiscard]] bool checkPlayerDecision() const;
     void handlePlayerChoice();
     [[nodiscard]] bool isGameOver() const;
-    void resetGame();
+    //void resetGame();
     void HandleEvents(const sf::Event& event);
     void drawIntro();
     bool introDisplayed = false;

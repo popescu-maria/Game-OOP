@@ -53,12 +53,12 @@ bool Game::isGameOver() const
     return false;
 }
 
-void Game::resetGame()
-{
-    m_incercari = 0;
-    m_isGameOver = false;
-    GameState = 1;
-}
+// void Game::resetGame()
+// {
+//     m_incercari = 0;
+//     m_isGameOver = false;
+//     GameState = 1;
+// }
 
 Game::Game()
     : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png", 2)

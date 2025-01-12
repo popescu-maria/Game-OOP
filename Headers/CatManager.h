@@ -16,7 +16,6 @@ public:
 
     [[nodiscard]] std::shared_ptr<Cat> getCurrentCat() const;
     void replaceCat(sf::RenderWindow& window, const std::string& fileName, int nivelNr);
-    static void nextLevel();
     static void increaseCatsCount();
     static int getCatsCount();
 
