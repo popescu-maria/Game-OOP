@@ -26,7 +26,6 @@ public:
 class PermitFalsifier : public DocFalsifier
 {
 public:
-    //PermitFalsifier();
     void falsify(std::shared_ptr<Documente>& doc) override;
 private:
     //sf::Texture fakeSealTexture;

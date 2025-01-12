@@ -13,15 +13,5 @@ FalsifierFactory::FalsifierFactory()
 
 std::shared_ptr<DocFalsifier> FalsifierFactory:: getFalsifier(const std::shared_ptr<Documente>& document)
 {
-    if (!document)
-    {
-        return nullptr;
-    }
-
-    const std::type_info& documentType = typeid(*document);
-    if (const auto it = falsifierMap.find(documentType); it != falsifierMap.end())
-    {
-        return it->second;
-    }
-    return nullptr;
+    return document->getFalsifier();
 }

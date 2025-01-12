@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Documente.h"
-#include <iostream>
+#include "DocFalsifier.h"
 
 class Id : public Documente
 {
@@ -17,4 +17,7 @@ public:
        , float scaleX, float scaleY);
     void setText() override;
     void SetFakeDistrict(const std::string& fakeDistrict);
+    std::shared_ptr<DocFalsifier> getFalsifier() const override {
+        return std::make_shared<IDFalsifier>();
+    }
 };

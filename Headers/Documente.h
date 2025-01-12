@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "SFML/System/Vector2.hpp"
-
 #include <optional>
 #include <chrono>
 #include "Text.h"
+
+class DocFalsifier;
 class Cat;
 
 class Documente
@@ -41,6 +41,7 @@ public:
 
     void AddText(const Text& text, const sf::Vector2f& offset);
     virtual void setText() = 0;
+    virtual std::shared_ptr<DocFalsifier> getFalsifier() const = 0;
 
     void checkBounds(sf::RenderWindow& window);
     void move(sf::RenderWindow& window);
