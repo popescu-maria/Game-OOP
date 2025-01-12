@@ -33,7 +33,6 @@ class Game
 
     bool m_isGameOver{false};
     bool docsChecked = false;
-    int m_incercari{0};
     const float m_levelTimeLimit = 30.0f;
     //sf::Clock m_clock;
 

@@ -144,7 +144,7 @@ bool Cat::IsDocValid() const
     return true;
 }
 
-std::vector<std::shared_ptr<Documente>> Cat::getDocumente() const
+const std::vector<std::shared_ptr<Documente>>& Cat::getDocumente() const
 {
     return m_documente;
 }

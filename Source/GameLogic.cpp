@@ -87,7 +87,7 @@ void Game::HandleEvents(const sf::Event& event)
         {
             for (const auto& doc : m_current_cat.getCurrentCat()->getDocumente())
             {
-                if (auto* pasaport = dynamic_cast<Pasaport*>(doc.get()))
+                if (const auto* pasaport = dynamic_cast<Pasaport*>(doc.get()))
                 {
                     if (pasaport->getBounds().contains(mousePos))
                     {
