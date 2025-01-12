@@ -40,7 +40,7 @@ void FakeCat::createCurrentDocs(int levelNr)
     }
 }
 
-bool FakeCat::IsDocValid()
+bool FakeCat::IsDocValid() const
 {
     return false;
 }

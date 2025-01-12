@@ -28,13 +28,11 @@ protected:
     std::string m_name;
 
 public:
-    // Move funct and checking function and how do i make more use of the createDoc fct
     Documente() = default;
     void createDoc();
     Documente(const Documente& oth);
     Documente& operator=(const Documente& oth);
     Documente(sf::Vector2f pos, std::string name, const std::string& fileName);
-    //virtual std::shared_ptr<Documente> clone() const = 0;
 
     [[nodiscard]] std::string get_date() const;
     sf::FloatRect getBounds() const;

@@ -47,7 +47,7 @@ public:
     virtual void createCurrentDocs(int levelNr);
     void clearDoc();
     void drawCurrentCat(sf::RenderWindow& window) const;
-    virtual bool IsDocValid();
+    virtual bool IsDocValid() const;
     [[nodiscard]] std::vector<std::shared_ptr<Documente>> getDocumente() const;
 
     void move();

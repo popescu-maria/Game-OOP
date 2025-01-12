@@ -44,7 +44,7 @@ CatManager::CatManager(sf::RenderWindow& window, const std::string& fileName, in
     createNewCat(window, fileName, nivelNr);
 }
 
-std::shared_ptr<Cat> CatManager::getCurrentCat()
+std::shared_ptr<Cat> CatManager::getCurrentCat() const
 {
     return m_currentCat;
 }
@@ -53,11 +53,16 @@ void CatManager::replaceCat(sf::RenderWindow& window, const std::string& fileNam
     createNewCat(window, fileName, nivelNr);
 }
 
-void CatManager::nextLevel(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
+void CatManager::nextLevel()
 {
     m_CatsCount = 0;
-    createNewCat(window, fileName, nivelNr);
 }
+
+void CatManager::increaseCatsCount()
+{
+    m_CatsCount++;
+}
+
 
 int CatManager::getCatsCount()
 {

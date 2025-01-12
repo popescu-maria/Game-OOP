@@ -14,9 +14,10 @@ private:
 public:
     explicit CatManager(sf::RenderWindow& window, const std::string& fileName, int nivelNr);
 
-    std::shared_ptr<Cat> getCurrentCat();
+    [[nodiscard]] std::shared_ptr<Cat> getCurrentCat() const;
     void replaceCat(sf::RenderWindow& window, const std::string& fileName, int nivelNr);
-    void nextLevel(sf::RenderWindow& window, const std::string& fileName, int nivelNr);
+    static void nextLevel();
+    static void increaseCatsCount();
     static int getCatsCount();
 
 };

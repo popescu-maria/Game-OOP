@@ -83,7 +83,7 @@ void Cat::makeDoc(const int levelNr)
                                                         m_age, m_gender, 0.35f, 0.35f);
             m_documente.emplace_back(pasaport2);
 
-            auto id = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+            auto id = std::make_shared<Id>(sf::Vector2f(600.f, 305.f), m_name, "Img/Id.png", m_age,
                                            m_height, m_weight, 1.2f, 1.2f); // Example parameters
             m_documente.emplace_back(id);
             break;
@@ -93,11 +93,11 @@ void Cat::makeDoc(const int levelNr)
                                                         m_age, m_gender, 0.35f, 0.35f);
             m_documente.emplace_back(pasaport3);
 
-            auto id2 = std::make_shared<Id>(sf::Vector2f(350.f, 305.f), m_name, "Img/Id.png", m_age,
+            auto id2 = std::make_shared<Id>(sf::Vector2f(600.f, 305.f), m_name, "Img/Id.png", m_age,
                                             m_height, m_weight, 1.2f, 1.2f); // Example parameters
             m_documente.emplace_back(id2);
 
-            auto entryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(350.f, 305.f), m_name, "Img/EntryPermit.png",
+            auto entryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(900.f, 305.f), m_name, "Img/EntryPermit.png",
                                                                0.9f, 0.9f);
             m_documente.emplace_back(entryPermit);
             break;
@@ -139,7 +139,7 @@ void Cat::drawCurrentCat(sf::RenderWindow& window) const
     }
 }
 
-bool Cat::IsDocValid()
+bool Cat::IsDocValid() const
 {
     return true;
 }

@@ -29,33 +29,26 @@ void Game::loadBackground()
 }
 
 
-// bool Game::checkPlayerDecision() const
-// {
-//     //const bool IsValid = m_current_cat.getCurrentCat()->IsPasaportValid();
-//     std::random_device rd;
-//     std::mt19937 gen(rd());
-//     std::uniform_real_distribution distrib(0.0f, 2.5f);
-//
-//     if (IsValid)
-//     {
-//         const float secNr = distrib(gen);
-//         std::cout << "checking.......\n";
-//         sf::sleep(sf::seconds(secNr));
-//         std::cout << "Documentele sunt valide!" << std::endl;
-//     }
-//     else
-//     {
-//         std::cout << "checking.......\n" << std::endl;
-//         sf::sleep(sf::seconds(2));
-//         std::cout << "Documente invalide!" << std::endl;
-//     }
-//
-//     return IsValid;
-// }
+bool Game::checkPlayerDecision() const
+{
+    bool isValid = m_current_cat.getCurrentCat()->IsDocValid();
+    bool playerDecision = false;
+    if (dynamic_cast<EntryGranted*>(m_context.getCurrentState()))
+    {
+        playerDecision = true;
+    }
+    else if (dynamic_cast<EntryDenied*>(m_context.getCurrentState()))
+    {
+        playerDecision = false;
+    }
+    if (isValid == playerDecision)
+        return true;
+    return false;
+}
 
 bool Game::isGameOver() const
 {
-    if (GameState == 7)
+    if (GameState > 7)
         return true;
     return false;
 }
@@ -80,21 +73,6 @@ void Game::handlePlayerChoice()
     m_current_cat.getCurrentCat()->leave();
 }
 
-void Game::handleNivelEndInput()
-{
-    sf::Event event;
-    while (m_window.pollEvent(event))
-    {
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
-        {
-            GameState++;
-        }
-        else if (event.type == sf::Event::Closed)
-        {
-            m_window.close();
-        }
-    }
-}
 
 void Game::HandleEvents(const sf::Event& event)
 {
@@ -116,8 +94,10 @@ void Game::HandleEvents(const sf::Event& event)
                         if (dynamic_cast<EntryGranted*>(m_context.getCurrentState()) ||
                             dynamic_cast<EntryDenied*>(m_context.getCurrentState()))
                         {
-                            std::cout << "\nam ales daca e bun sau fals";
-                            //m_current_cat.getCurrentCat()->clearDocuments();
+                            if (checkPlayerDecision())
+                                m_pisiciCorecte++;
+                            //std::cout << "\n" << m_pisiciCorecte << " " << m_pisiciTotale;
+                            CatManager::increaseCatsCount();
                             handlePlayerChoice();
                             docsChecked = true;
                         }
@@ -137,16 +117,114 @@ void Game::HandleEvents(const sf::Event& event)
 void Game::drawIntro()
 {
     m_window.clear(sf::Color::Black);
-    m_window.display();
+    if (!introDisplayed)
+    {
+        TextBuilder builder;
 
+        m_introText = builder.setString(
+                                 "Cats Apocalypse\n\n"
+                                 "Regulile jocului:\n"
+                                 "Da click pe butonul din dreapta pentru a alege ce stampila vrei sa pui pe pasaport, \n"
+                                 "apoi apasa pe pasaport pentru a finaliza actiunea.\n\n"
+                                 "                               Press N for next Cat!!!\n\n"
+                                 "Apasa pe butonul de regulament (plasat stanga jos) pentru a te uita la atributele valide \n"
+                                 "si a le compara cu cele de pe documente! Pentru a inchide regulamnentul la loc da click pe el.\n\n"
+                                 "Atentie la pasapoarte! Nu lasati pisicile cu pasapoarte expirate sa intre in TaraPisicilor!\n\n"
+                             )
+                             .setSize(20)
+                             .setCol(sf::Color::White)
+                             .build();
+
+        m_startText = builder.setString("Press enter to start!")
+                             .setSize(40)
+                             .setCol(sf::Color::Green)
+                             .build();
+
+        const sf::Vector2u windowSize = m_window.getSize();
+        const sf::FloatRect introTextBounds = m_introText.getText().getGlobalBounds();
+        const sf::FloatRect startTextBounds = m_startText.getText().getGlobalBounds();
+
+        const float introX = (windowSize.x - introTextBounds.width) / 2.0f;
+        const float introY = (windowSize.y - introTextBounds.height) / 2.0f;
+        m_introText.getText().setPosition(introX, introY);
+
+        const float startX = (windowSize.x - startTextBounds.width) / 2.0f;
+        const float startY = introY + introTextBounds.height + 10.0f;
+        m_startText.getText().setPosition(startX, startY);
+
+        introDisplayed = true;
+    }
+
+    m_window.draw(m_introText.getText());
+    m_window.draw(m_startText.getText());
 }
 
 void Game::drawNivelEnd()
 {
     m_window.clear(sf::Color::Black);
-    m_window.display();
+    TextBuilder builder;
 
+    Text totalCatsText = builder.setString(
+                                    "Total pisici evaluate: " + std::to_string(CatManager::getCatsCount()))
+                                .setSize(40)
+                                .setCol(sf::Color::White)
+                                .build();
+
+    Text correctCatsText = builder.setString(
+                                      "Pisici evaluate corect: " + std::to_string(m_pisiciCorecte))
+                                  .setSize(40)
+                                  .setCol(sf::Color::Green)
+                                  .build();
+
+    const sf::Vector2u windowSize = m_window.getSize();
+    const sf::FloatRect totalCatsBounds = totalCatsText.getText().getGlobalBounds();
+    const sf::FloatRect correctCatsBounds = correctCatsText.getText().getGlobalBounds();
+
+    totalCatsText.getText().setPosition((windowSize.x - totalCatsBounds.width) / 2.0f, windowSize.y / 3.0f);
+    correctCatsText.getText().setPosition((windowSize.x - correctCatsBounds.width) / 2.0f, windowSize.y / 2.0f);
+
+    m_window.draw(totalCatsText.getText());
+    m_window.draw(correctCatsText.getText());
 }
+
+void Game::drawGameOver()
+{
+    m_window.clear(sf::Color::Black);
+    TextBuilder builder;
+
+    Text totalPointsText = builder.setString(
+                                      "Puncte totale acumulate: " + std::to_string(m_pisiciCorecte))
+                                  .setSize(40)
+                                  .setCol(sf::Color::Green)
+                                  .build();
+
+    Text totalCatsCheckedText = builder.setString(
+                                           "Total pisici evaluate: " + std::to_string(CatManager::getCatsCount()))
+                                       .setSize(30)
+                                       .setCol(sf::Color::White)
+                                       .build();
+    Text gameOverText = builder.setString("GAME OVER!")
+                               .setSize(60)
+                               .setCol(sf::Color::Red)
+                               .build();
+
+    const sf::Vector2u windowSize = m_window.getSize();
+
+    const sf::FloatRect pointsBounds = totalPointsText.getText().getGlobalBounds();
+    const sf::FloatRect catsBounds = totalCatsCheckedText.getText().getGlobalBounds();
+    const sf::FloatRect gameOverBounds = gameOverText.getText().getGlobalBounds();
+
+    const float centerX = static_cast<float>(windowSize.x) / 2.0f;
+
+    totalPointsText.getText().setPosition(centerX - pointsBounds.width / 2.0f, windowSize.y / 3.0f);
+    totalCatsCheckedText.getText().setPosition(centerX - catsBounds.width / 2.0f, windowSize.y / 2.5f);
+    gameOverText.getText().setPosition(centerX - gameOverBounds.width / 2.0f, windowSize.y / 2.0f);
+
+    m_window.draw(totalPointsText.getText());
+    m_window.draw(totalCatsCheckedText.getText());
+    m_window.draw(gameOverText.getText());
+}
+
 
 void Game::draw()
 {
@@ -185,8 +263,12 @@ void Game::Play()
                 break;
 
             case NIVEL_1_END:
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+                    GameState = NIVEL_2;
+                break;
             case NIVEL_2_END:
-                handleNivelEndInput();
+                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+                    GameState = NIVEL_3;
                 break;
 
             case NIVEL_1:
@@ -207,29 +289,37 @@ void Game::Play()
             {
             case INTRO:
                 drawIntro();
+                clock.restart();
                 break;
-
 
             case NIVEL_1:
             case NIVEL_2:
             case NIVEL_3:
                 draw();
-                if (docsChecked)
+
+                elapsedTime = clock.getElapsedTime();
+
+                if (elapsedTime.asSeconds() >= m_levelTimeLimit)
                 {
-                    GameState++;
-                    docsChecked = false;
+                    if (GameState == NIVEL_1)
+                        GameState = NIVEL_1_END;
+                    else if (GameState == NIVEL_2)
+                        GameState = NIVEL_2_END;
+                    else if (GameState == NIVEL_3)
+                        GameState = GAME_OVER;
+
+                    clock.restart();
                 }
                 break;
 
             case NIVEL_1_END:
             case NIVEL_2_END:
                 drawNivelEnd();
+                clock.restart();
                 break;
 
             case GAME_OVER:
-            m_window.clear(sf::Color::Black);
-                // Draw game over screen call gameoverdraw
-                m_window.display();
+                drawGameOver();
                 break;
 
             default: break;
@@ -239,6 +329,9 @@ void Game::Play()
     }
 }
 
+// void Game::calcPisiciTotale(const int pisiciZi) { m_pisiciTotale += pisiciZi; }
+//
+// void Game::calcScorFinal(const int ScorZi) { m_scor += ScorZi;}
 
 std::ostream& operator<<(std::ostream& os, const Game& game)
 {
