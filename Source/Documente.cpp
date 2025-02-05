@@ -40,8 +40,8 @@ Documente& Documente::operator=(const Documente& oth)
 std::string Documente::get_date() const
 {
     std::ostringstream date_stream;
-    date_stream << static_cast<unsigned>(m_expDate.month()) << "/"
-        << static_cast<unsigned>(m_expDate.day()) << "/"
+    date_stream << static_cast<unsigned>(m_expDate.day()) << "/"
+        << static_cast<unsigned>(m_expDate.month()) << "/"
         << static_cast<int>(m_expDate.year());
 
     return date_stream.str();

@@ -50,7 +50,6 @@ void CatManager::increaseCatsCount()
     m_CatsCount++;
 }
 
-
 int CatManager::getCatsCount()
 {
     return m_CatsCount;

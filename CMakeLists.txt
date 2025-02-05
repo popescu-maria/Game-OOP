@@ -84,6 +84,7 @@ add_executable(${PROJECT_NAME}
         Source/ButtonState.cpp
         Headers/RuleBook.h
         Source/RuleBook.cpp
+        Headers/Singleton.h
 )
 
 include(cmake/CompilerFlags.cmake)
@@ -125,6 +126,7 @@ endif()
 
 include(cmake/CopyHelper.cmake)
 copy_files(FILES tastatura.txt)
+copy_files(FILES cat_names.txt)
 copy_files(FILES ocr-a-extended.ttf)
 copy_files(DIRECTORY Img)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)

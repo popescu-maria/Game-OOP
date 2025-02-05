@@ -10,6 +10,13 @@
 #include <random>
 #include <chrono>
 
+Game::Game()
+    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png", 2)
+      , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
+{
+    m_window.setFramerateLimit(60);
+}
+
 void Game::loadBackground()
 {
     if (!m_backgroundTexture.loadFromFile("Img/background.png"))
@@ -48,7 +55,7 @@ bool Game::checkPlayerDecision() const
 
 bool Game::isGameOver() const
 {
-    if (GameState > 7)
+    if (GameState > GAME_OVER)
         return true;
     return false;
 }
@@ -59,12 +66,6 @@ bool Game::isGameOver() const
 //     m_isGameOver = false;
 //     GameState = 1;
 // }
-
-Game::Game()
-    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png", 2)
-      , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
-{
-}
 
 void Game::handlePlayerChoice()
 {

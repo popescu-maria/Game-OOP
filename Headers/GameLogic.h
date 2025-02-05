@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Singleton.h"
 #include "CatManager.h"
 #include "ButtonState.h"
 #include "Button.h"
@@ -19,8 +20,11 @@ enum GameStates
     GAME_OVER = 7
 };
 
-class Game
+class Game : public Singleton<Game>
 {
+    friend class Singleton;
+    Game();
+
     sf::RenderWindow m_window;
     sf::Texture m_backgroundTexture;
     sf::Sprite m_backgroundSprite;
@@ -59,7 +63,6 @@ class Game
     //void calcScorFinal(int ScorZi);
 
 public:
-    Game();
     void Play();
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 

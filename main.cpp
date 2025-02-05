@@ -2,8 +2,8 @@
 
 int main()
 {
-    Game currentGame;
-    currentGame.Play();
+    Game& game = Game::getInstance();
+    game.Play();
 
     return 0;
 }

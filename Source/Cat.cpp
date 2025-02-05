@@ -1,5 +1,6 @@
 #include <vector>
 #include <random>
+#include <fstream>
 
 #include "../Headers/Pasaport.h"
 #include "../Headers/ID.h"
@@ -7,40 +8,52 @@
 #include "../Headers/EntryPermit.h"
 #include "../Headers/Exceptions.h"
 
+std::vector<std::string> Cat::s_names = Cat::loadNamesFromFile("cat_names.txt");
+
 void Cat::generateRandomCat()
 {
-    static std::vector<std::string> names = {
-        "Whiskers", "Luna", "Milo", "Bella", "Oliver", "Simba", "Chloe", "Shadow", "Leo", "Nala",
-        "Pumpkin", "Mittens", "Sassy", "Tiger", "Gizmo", "Tigger", "Cleo", "Oreo", "Missy", "Ziggy",
-        "Kitty", "Jasper", "Boots", "Salem", "Lily", "Felix", "Misty", "Socks", "Mocha", "Pepper",
-        "Rusty", "Lucky", "Toffee", "Peanut", "Smokey", "Biscuit", "Mochi", "Ash", "Bandit", "Garfield",
-        "Midnight", "Toby", "Mango", "Willow", "Finn", "Hazel", "Cinnamon", "Cali", "Mimi", "Bubbles",
-        "Snowball", "Honey", "Benny", "Blue", "Cuddles", "Chester", "Mabel", "Sushi", "Daisy", "Buttons"
-    };
-    // static std::vector<std::string> colors = {"Black", "White", "Orange", "Gray", "Brown"};
-    // static std::vector<std::string> patterns = {"Striped", "Solid", "Spotted", "Mixed"};
-    // static std::vector<std::string> eyeColors = {"Green", "Blue", "Yellow", "Brown"};
+    if (s_names.empty())
+    {
+        throw std::runtime_error("No names loaded from file.");
+    }
 
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::uniform_int_distribution<> nameDist(0, names.size() - 1);
-    // std::uniform_int_distribution<> colorDist(0, colors.size() - 1);
-    // std::uniform_int_distribution<> patternDist(0, patterns.size() - 1);
-    // std::uniform_int_distribution<> eyeColorDist(0, eyeColors.size() - 1);
+    std::uniform_int_distribution<> nameDist(0, s_names.size() - 1);
     std::uniform_int_distribution<> ageDist(1, 18);
     std::uniform_int_distribution<> genderDist(0, 1);
     std::uniform_real_distribution<> heightDist(20.0, 40.0);
     std::uniform_real_distribution<> weightDist(2.0, 7.0);
 
-    m_name = names[nameDist(gen)];
-    // m_color = colors[colorDist(gen)];
-    // m_patterns = patterns[patternDist(gen)];
-    // m_color_of_eyes = eyeColors[eyeColorDist(gen)];
+    m_name = s_names[nameDist(gen)];
     m_age = ageDist(gen);
     m_gender = genderDist(gen) == 0 ? 'M' : 'F';
     m_height = heightDist(gen);
     m_weight = weightDist(gen);
 
+}
+
+std::vector<std::string> Cat::loadNamesFromFile(const std::string& filename)
+{
+    std::vector<std::string> names;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Could not open names file.");
+    }
+
+    while (std::getline(file, line))
+    {
+        if (!line.empty())
+        {
+            names.push_back(line);
+        }
+    }
+
+    file.close();
+    return names;
 }
 
 // std::string Cat::getColorFilename() const { return "Cat_" + m_color + ".png"; }
@@ -84,7 +97,7 @@ void Cat::makeDoc(const int levelNr)
             m_documente.emplace_back(pasaport2);
 
             auto id = std::make_shared<Id>(sf::Vector2f(600.f, 305.f), m_name, "Img/Id.png", m_age,
-                                           m_height, m_weight, 1.2f, 1.2f); // Example parameters
+                                           m_height, m_weight, 1.2f, 1.2f);
             m_documente.emplace_back(id);
             break;
     }
@@ -151,7 +164,6 @@ const std::vector<std::shared_ptr<Documente>>& Cat::getDocumente() const
 
 void Cat::move()
 {
-    //setMoveTarget();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
     {
         m_finalSprite.setPosition(m_finalSprite.getPosition() + sf::Vector2f(1, 0));
