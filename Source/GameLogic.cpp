@@ -54,12 +54,12 @@ bool Game::checkPlayerDecision() const
     return false;
 }
 
-bool Game::isGameOver() const
-{
-    if (GameState > GAME_OVER)
-        return true;
-    return false;
-}
+// bool Game::isGameOver() const
+// {
+//     if (GameState > GAME_OVER)
+//         return true;
+//     return false;
+// }
 
 void Game::handlePlayerChoice()
 {
@@ -260,10 +260,10 @@ void Game::Play()
         }
 
         LevelManager::handleLevelLogic(GameState, m_window, clock, elapsedTime, m_levelTimeLimit,
-            [this]() { drawIntro(); },
-            [this]() { draw(); },
-            [this]() { drawNivelEnd(); },
-            [this]() { drawGameOver(); }
+                                       [this]() { drawIntro(); },
+                                       [this]() { draw(); },
+                                       [this]() { drawNivelEnd(); },
+                                       [this]() { drawGameOver(); }
         );
     }
 }

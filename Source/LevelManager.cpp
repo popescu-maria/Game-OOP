@@ -1,6 +1,6 @@
 #include "../Headers/LevelManager.h"
 #include "../Headers/Pasaport.h"
-#include "../Headers/Id.h"
+#include "../Headers/ID.h"
 #include "../Headers/EntryPermit.h"
 
 void LevelManager::handleGameState(int& gameState, const sf::Event& event)
@@ -25,19 +25,23 @@ void LevelManager::handleGameState(int& gameState, const sf::Event& event)
     }
 }
 
-void LevelManager::handleCatDocuments(const int levelNr, std::vector<std::shared_ptr<Documente>>& documents, const std::string& name, int age, char gender, float height, float weight)
+void LevelManager::handleCatDocuments(const int levelNr, std::vector<std::shared_ptr<Documente>>& documents,
+                                      const std::string& name, int age, char gender, float height, float weight)
 {
     documents.clear();
 
-    documents.emplace_back(std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), name, "Img/Pasaport.png", age, gender, 0.35f, 0.35f));
+    documents.emplace_back(std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), name, "Img/Pasaport.png", age, gender,
+                                                      0.35f, 0.35f));
 
     if (levelNr >= 4)
     {
-        documents.emplace_back(std::make_shared<Id>(sf::Vector2f(600.f, 305.f), name, "Img/Id.png", age, height, weight, 1.2f, 1.2f));
+        documents.emplace_back(std::make_shared<Id>(sf::Vector2f(600.f, 305.f), name, "Img/Id.png", age, height, weight,
+                                                    1.2f, 1.2f));
     }
     if (levelNr >= 6)
     {
-        documents.emplace_back(std::make_shared<EntryPermit>(sf::Vector2f(900.f, 305.f), name, "Img/EntryPermit.png", 0.9f, 0.9f));
+        documents.emplace_back(
+            std::make_shared<EntryPermit>(sf::Vector2f(900.f, 305.f), name, "Img/EntryPermit.png", 0.9f, 0.9f));
     }
 
     for (const auto& doc : documents)
@@ -46,8 +50,11 @@ void LevelManager::handleCatDocuments(const int levelNr, std::vector<std::shared
     }
 }
 
-void LevelManager::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime, float levelTimeLimit,
-                                    const std::function<void()>& drawIntro, const std::function<void()>& draw, const std::function<void()>& drawNivelEnd, const std::function<void()>& drawGameOver)
+void LevelManager::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,
+                                    float levelTimeLimit,
+                                    const std::function<void()>& drawIntro, const std::function<void()>& draw,
+                                    const std::function<void()>& drawNivelEnd,
+                                    const std::function<void()>& drawGameOver)
 {
     window.clear();
 

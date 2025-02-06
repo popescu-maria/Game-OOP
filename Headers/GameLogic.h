@@ -11,7 +11,6 @@
 #include <vector>
 
 
-
 class Game : public Singleton<Game>
 {
     friend class Singleton;
@@ -38,7 +37,7 @@ class Game : public Singleton<Game>
 
     [[nodiscard]] bool checkPlayerDecision() const;
     void handlePlayerChoice();
-    [[nodiscard]] bool isGameOver() const;
+    //[[nodiscard]] bool isGameOver() const;
     void HandleEvents(const sf::Event& event);
     void drawIntro();
     bool introDisplayed = false;

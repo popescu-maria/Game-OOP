@@ -22,10 +22,14 @@ class LevelManager : public Singleton<LevelManager>
 {
     friend class Singleton;
     LevelManager() = default;
+
 public:
     static void handleGameState(int& gameState, const sf::Event& event);
-    static void handleCatDocuments(int levelNr, std::vector<std::shared_ptr<Documente>>& documents, const std::string& name, int age, char gender, float height, float weight);
-    static void handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime, float levelTimeLimit,
-                                        const std::function<void()>& drawIntro, const std::function<void()>& draw, const std::function<void()>& drawNivelEnd, const std::function<void()>& drawGameOver);
+    static void handleCatDocuments(int levelNr, std::vector<std::shared_ptr<Documente>>& documents,
+                                   const std::string& name, int age, char gender, float height, float weight);
+    static void handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,
+                                 float levelTimeLimit,
+                                 const std::function<void()>& drawIntro, const std::function<void()>& draw,
+                                 const std::function<void()>& drawNivelEnd, const std::function<void()>& drawGameOver);
 };
 
