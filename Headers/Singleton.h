@@ -2,12 +2,14 @@
 #define SINGLETON_H
 
 template <typename T>
-class Singleton {
+class Singleton
+{
 public:
     Singleton(const Singleton&) = delete;
     Singleton& operator=(const Singleton&) = delete;
 
-    static T& getInstance() {
+    static T& getInstance()
+    {
         static T instance;
         return instance;
     }

@@ -7,6 +7,7 @@
 #include "../Headers/Cat.h"
 #include "../Headers/EntryPermit.h"
 #include "../Headers/Exceptions.h"
+#include "../Headers/LevelManager.h"
 
 std::vector<std::string> Cat::s_names = Cat::loadNamesFromFile("cat_names.txt");
 
@@ -82,47 +83,7 @@ Cat::Cat(const sf::RenderWindow& window, const std::string& fileName) : m_distan
 
 void Cat::makeDoc(const int levelNr)
 {
-    m_documente.clear();
-    switch (levelNr)
-    {
-    case 2: {
-            auto pasaport = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
-                                                       m_age, m_gender, 0.35f, 0.35f);
-            m_documente.emplace_back(pasaport);
-            break;
-    }
-    case 4: {
-            auto pasaport2 = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
-                                                        m_age, m_gender, 0.35f, 0.35f);
-            m_documente.emplace_back(pasaport2);
-
-            auto id = std::make_shared<Id>(sf::Vector2f(600.f, 305.f), m_name, "Img/Id.png", m_age,
-                                           m_height, m_weight, 1.2f, 1.2f);
-            m_documente.emplace_back(id);
-            break;
-    }
-    case 6: {
-            auto pasaport3 = std::make_shared<Pasaport>(sf::Vector2f(350.f, 305.f), m_name, "Img/Pasaport.png",
-                                                        m_age, m_gender, 0.35f, 0.35f);
-            m_documente.emplace_back(pasaport3);
-
-            auto id2 = std::make_shared<Id>(sf::Vector2f(600.f, 305.f), m_name, "Img/Id.png", m_age,
-                                            m_height, m_weight, 1.2f, 1.2f); // Example parameters
-            m_documente.emplace_back(id2);
-
-            auto entryPermit = std::make_shared<::EntryPermit>(sf::Vector2f(900.f, 305.f), m_name, "Img/EntryPermit.png",
-                                                               0.9f, 0.9f);
-            m_documente.emplace_back(entryPermit);
-            break;
-    }
-    default:
-        break;
-    }
-
-    for (const auto& doc : m_documente)
-    {
-        doc->createDoc();
-    }
+    LevelManager::handleCatDocuments(levelNr, m_documente, m_name, m_age, m_gender, m_height, m_weight);
 }
 
 void Cat::clearDoc()

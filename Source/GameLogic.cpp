@@ -3,8 +3,8 @@
 #include "../Headers/Exceptions.h"
 #include "../Headers/RuleBook.h"
 #include "../Headers/Pasaport.h"
+#include "../Headers/LevelManager.h"
 
-#include <iostream>
 #include <ostream>
 #include <memory>
 #include <random>
@@ -15,6 +15,7 @@ Game::Game()
       , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
 {
     m_window.setFramerateLimit(60);
+    GameState = INTRO;
 }
 
 void Game::loadBackground()
@@ -59,13 +60,6 @@ bool Game::isGameOver() const
         return true;
     return false;
 }
-
-// void Game::resetGame()
-// {
-//     m_incercari = 0;
-//     m_isGameOver = false;
-//     GameState = 1;
-// }
 
 void Game::handlePlayerChoice()
 {
@@ -256,83 +250,23 @@ void Game::Play()
         {
             if (event.type == sf::Event::Closed)
                 m_window.close();
-            switch (GameState)
+
+            LevelManager::handleGameState(GameState, event);
+
+            if (GameState == NIVEL_1 || GameState == NIVEL_2 || GameState == NIVEL_3)
             {
-            case INTRO:
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
-                    GameState = NIVEL_1;
-                break;
-
-            case NIVEL_1_END:
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
-                    GameState = NIVEL_2;
-                break;
-            case NIVEL_2_END:
-                if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
-                    GameState = NIVEL_3;
-                break;
-
-            case NIVEL_1:
-            case NIVEL_2:
-            case NIVEL_3:
                 HandleEvents(event);
-                break;
-
-            default: break;
             }
         }
 
-        m_window.clear();
-
-        if (!isGameOver())
-        {
-            switch (GameState)
-            {
-            case INTRO:
-                drawIntro();
-                clock.restart();
-                break;
-
-            case NIVEL_1:
-            case NIVEL_2:
-            case NIVEL_3:
-                draw();
-
-                elapsedTime = clock.getElapsedTime();
-
-                if (elapsedTime.asSeconds() >= m_levelTimeLimit)
-                {
-                    if (GameState == NIVEL_1)
-                        GameState = NIVEL_1_END;
-                    else if (GameState == NIVEL_2)
-                        GameState = NIVEL_2_END;
-                    else if (GameState == NIVEL_3)
-                        GameState = GAME_OVER;
-
-                    clock.restart();
-                }
-                break;
-
-            case NIVEL_1_END:
-            case NIVEL_2_END:
-                drawNivelEnd();
-                clock.restart();
-                break;
-
-            case GAME_OVER:
-                drawGameOver();
-                break;
-
-            default: break;
-            }
-        }
-        m_window.display();
+        LevelManager::handleLevelLogic(GameState, m_window, clock, elapsedTime, m_levelTimeLimit,
+            [this]() { drawIntro(); },
+            [this]() { draw(); },
+            [this]() { drawNivelEnd(); },
+            [this]() { drawGameOver(); }
+        );
     }
 }
-
-// void Game::calcPisiciTotale(const int pisiciZi) { m_pisiciTotale += pisiciZi; }
-//
-// void Game::calcScorFinal(const int ScorZi) { m_scor += ScorZi;}
 
 std::ostream& operator<<(std::ostream& os, const Game& game)
 {

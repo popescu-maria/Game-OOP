@@ -29,11 +29,12 @@ class Cat
     std::string m_name;
     int m_age{};
     char m_gender{'F'};
-    int m_height{};
-    int m_weight{};
+    float m_height{};
+    float m_weight{};
 
     static std::vector<std::string> loadNamesFromFile(const std::string& filename);
     static std::vector<std::string> s_names;
+
 protected:
     std::vector<std::shared_ptr<Documente>> m_documente;
     void makeDoc(int levelNr);

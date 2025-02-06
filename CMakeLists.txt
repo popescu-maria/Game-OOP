@@ -85,6 +85,8 @@ add_executable(${PROJECT_NAME}
         Headers/RuleBook.h
         Source/RuleBook.cpp
         Headers/Singleton.h
+        Headers/LevelManager.h
+        Source/LevelManager.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
