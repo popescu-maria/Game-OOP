@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "../Headers/Documente.h"
 #include "Singleton.h"
 
@@ -18,10 +19,10 @@ enum GameStates
     GAME_OVER = 7
 };
 
-class LevelManager : public Singleton<LevelManager>
+class LevelProgress : public Singleton<LevelProgress>
 {
     friend class Singleton;
-    LevelManager() = default;
+    LevelProgress() = default;
 
 public:
     static void handleGameState(int& gameState, const sf::Event& event);
@@ -30,6 +31,7 @@ public:
     static void handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,
                                  float levelTimeLimit,
                                  const std::function<void()>& drawIntro, const std::function<void()>& draw,
-                                 const std::function<void()>& drawNivelEnd, const std::function<void()>& drawGameOver);
+                                 const std::function<void()>& drawNivelEnd, const std::function<void()>& drawGameOver,
+                                 sf::Music& backgroundMusic);
 };
 

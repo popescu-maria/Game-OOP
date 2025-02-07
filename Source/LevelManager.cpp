@@ -3,7 +3,7 @@
 #include "../Headers/ID.h"
 #include "../Headers/EntryPermit.h"
 
-void LevelManager::handleGameState(int& gameState, const sf::Event& event)
+void LevelProgress::handleGameState(int& gameState, const sf::Event& event)
 {
     switch (gameState)
     {
@@ -25,7 +25,7 @@ void LevelManager::handleGameState(int& gameState, const sf::Event& event)
     }
 }
 
-void LevelManager::handleCatDocuments(const int levelNr, std::vector<std::shared_ptr<Documente>>& documents,
+void LevelProgress::handleCatDocuments(const int levelNr, std::vector<std::shared_ptr<Documente>>& documents,
                                       const std::string& name, int age, char gender, float height, float weight)
 {
     documents.clear();
@@ -50,11 +50,12 @@ void LevelManager::handleCatDocuments(const int levelNr, std::vector<std::shared
     }
 }
 
-void LevelManager::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,
+void LevelProgress::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,
                                     float levelTimeLimit,
                                     const std::function<void()>& drawIntro, const std::function<void()>& draw,
                                     const std::function<void()>& drawNivelEnd,
-                                    const std::function<void()>& drawGameOver)
+                                    const std::function<void()>& drawGameOver,
+                                 sf::Music& backgroundMusic)
 {
     window.clear();
 
@@ -68,6 +69,8 @@ void LevelManager::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf
     case NIVEL_1:
     case NIVEL_2:
     case NIVEL_3:
+        if (backgroundMusic.getStatus() == sf::Music::Playing)
+            backgroundMusic.pause();
         draw();
 
         elapsedTime = clock.getElapsedTime();
@@ -87,11 +90,15 @@ void LevelManager::handleLevelLogic(int& gameState, sf::RenderWindow& window, sf
 
     case NIVEL_1_END:
     case NIVEL_2_END:
+        if (backgroundMusic.getStatus() == sf::Music::Paused)
+            backgroundMusic.play();
         drawNivelEnd();
         clock.restart();
         break;
 
     case GAME_OVER:
+        if (backgroundMusic.getStatus() == sf::Music::Paused)
+            backgroundMusic.play();
         drawGameOver();
         break;
 

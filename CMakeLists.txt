@@ -25,7 +25,6 @@ set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
 # din cauza SFML
 set(WARNINGS_AS_ERRORS OFF)
 
-
 # NOTE: Also update SFML_VERSION env var in .github/workflows/cmake.yml:84
 FetchContent_Declare(
         SFML
@@ -35,6 +34,9 @@ FetchContent_Declare(
         # GIT_TAG        origin/master
         GIT_SHALLOW 1  # works only with branches or tags, not with arbitrary commit hashes
 )
+
+# Ensure that the audio module is enabled
+set(SFML_BUILD_AUDIO TRUE CACHE BOOL "Build SFML Audio module" FORCE)
 
 FetchContent_MakeAvailable(SFML)
 
@@ -87,6 +89,8 @@ add_executable(${PROJECT_NAME}
         Headers/Singleton.h
         Headers/LevelManager.h
         Source/LevelManager.cpp
+        #Headers/ProgressBar.h
+        #Source/ProgressBar.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
@@ -98,7 +102,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio Threads::Threads)
 
 if(APPLE)
 elseif(UNIX)
@@ -125,11 +129,12 @@ if (WIN32 AND SFML_BUILD_AUDIO)
     )
 endif()
 
-
 include(cmake/CopyHelper.cmake)
 copy_files(FILES tastatura.txt)
+copy_files(FILES configurare.txt)
 copy_files(FILES cat_names.txt)
 copy_files(FILES ocr-a-extended.ttf)
 copy_files(DIRECTORY Img)
+copy_files(DIRECTORY Sounds)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
 # copy_files(DIRECTORY images sounds)

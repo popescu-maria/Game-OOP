@@ -83,7 +83,7 @@ Cat::Cat(const sf::RenderWindow& window, const std::string& fileName) : m_distan
 
 void Cat::makeDoc(const int levelNr)
 {
-    LevelManager::handleCatDocuments(levelNr, m_documente, m_name, m_age, m_gender, m_height, m_weight);
+    LevelProgress::handleCatDocuments(levelNr, m_documente, m_name, m_age, m_gender, m_height, m_weight);
 }
 
 void Cat::clearDoc()

@@ -11,12 +11,41 @@
 #include <chrono>
 
 Game::Game()
-    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"), m_current_cat(m_window, "Img/CatShadow.png", 2)
+    : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"),
+      m_current_cat(m_window, "Img/CatShadow.png", 2)
       , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
+//,m_progressBar(50.f, 850.f, 1100.f, 20.f, m_levelTimeLimit)
+{
+    GameState = INTRO;
+    SetUp();
+}
+
+void Game::SetUp()
 {
     m_window.setFramerateLimit(60);
-    GameState = INTRO;
+
+    if (!m_meowBuffer.loadFromFile("Sounds/catSound.wav"))
+    {
+        throw std::runtime_error("Failed to load click sound effect!");
+    }
+    m_meowSound.setBuffer(m_meowBuffer);
+    m_meowSound.setVolume(10);
+
+    if (!m_StampPressBuffer.loadFromFile("Sounds/StampPress.wav"))
+    {
+        throw std::runtime_error("Failed to load click sound effect!");
+    }
+    m_StampPressSound.setBuffer(m_StampPressBuffer);
+
+    if (!m_backgroundMusic.openFromFile("Sounds/soundtrack.flac"))
+    {
+        throw std::runtime_error("Failed to load background music!");
+    }
+    m_backgroundMusic.setVolume(50);
+    m_backgroundMusic.setLoop(true);
+    m_backgroundMusic.play();
 }
+
 
 void Game::loadBackground()
 {
@@ -89,6 +118,7 @@ void Game::HandleEvents(const sf::Event& event)
                         if (dynamic_cast<EntryGranted*>(m_context.getCurrentState()) ||
                             dynamic_cast<EntryDenied*>(m_context.getCurrentState()))
                         {
+                            m_StampPressSound.play();
                             if (checkPlayerDecision())
                                 m_pisiciCorecte++;
                             //std::cout << "\n" << m_pisiciCorecte << " " << m_pisiciTotale;
@@ -104,6 +134,8 @@ void Game::HandleEvents(const sf::Event& event)
     }
     if (docsChecked && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::N)
     {
+        m_meowSound.play();
+        sf::sleep(sf::seconds(0.5));
         m_current_cat.replaceCat(m_window, "Img/CatShadow.png", GameState);
         docsChecked = false;
     }
@@ -236,6 +268,7 @@ void Game::draw()
         m_context.draw(m_window);
         m_RBcontext.draw(m_window);
     }
+    //m_progressBar.draw(m_window);
 }
 
 void Game::Play()
@@ -251,19 +284,22 @@ void Game::Play()
             if (event.type == sf::Event::Closed)
                 m_window.close();
 
-            LevelManager::handleGameState(GameState, event);
+            LevelProgress::handleGameState(GameState, event);
 
             if (GameState == NIVEL_1 || GameState == NIVEL_2 || GameState == NIVEL_3)
             {
                 HandleEvents(event);
             }
         }
+        // elapsedTime = clock.getElapsedTime();
+        // m_progressBar.update(elapsedTime.asSeconds());
 
-        LevelManager::handleLevelLogic(GameState, m_window, clock, elapsedTime, m_levelTimeLimit,
+        LevelProgress::handleLevelLogic(GameState, m_window, clock, elapsedTime, m_levelTimeLimit,
                                        [this]() { drawIntro(); },
                                        [this]() { draw(); },
                                        [this]() { drawNivelEnd(); },
-                                       [this]() { drawGameOver(); }
+                                       [this]() { drawGameOver(); },
+                                       m_backgroundMusic
         );
     }
 }
