@@ -130,7 +130,7 @@ endif()
 
 include(cmake/CopyHelper.cmake)
 copy_files(FILES tastatura.txt)
-copy_files(FILES configurare.txt)
+#copy_files(FILES configurare.txt)
 copy_files(FILES cat_names.txt)
 copy_files(FILES ocr-a-extended.ttf)
 copy_files(DIRECTORY Img)
