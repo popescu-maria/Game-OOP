@@ -37,11 +37,11 @@ void Game::SetUp()
     }
     m_StampPressSound.setBuffer(m_StampPressBuffer);
 
-    if (!m_backgroundMusic.openFromFile("Sounds/soundtrack.flac"))
+    if (!m_backgroundMusic.openFromFile("Sounds/soundtrack.wav"))
     {
         throw std::runtime_error("Failed to load background music!");
     }
-    m_backgroundMusic.setVolume(50);
+    m_backgroundMusic.setVolume(30);
     m_backgroundMusic.setLoop(true);
     m_backgroundMusic.play();
 }
@@ -295,11 +295,11 @@ void Game::Play()
         // m_progressBar.update(elapsedTime.asSeconds());
 
         LevelProgress::handleLevelLogic(GameState, m_window, clock, elapsedTime, m_levelTimeLimit,
-                                       [this]() { drawIntro(); },
-                                       [this]() { draw(); },
-                                       [this]() { drawNivelEnd(); },
-                                       [this]() { drawGameOver(); },
-                                       m_backgroundMusic
+                                        [this]() { drawIntro(); },
+                                        [this]() { draw(); },
+                                        [this]() { drawNivelEnd(); },
+                                        [this]() { drawGameOver(); },
+                                        m_backgroundMusic
         );
     }
 }
