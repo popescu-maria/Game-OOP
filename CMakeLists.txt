@@ -36,7 +36,6 @@ FetchContent_Declare(
 )
 
 # Ensure that the audio module is enabled
-set(SFML_BUILD_AUDIO TRUE CACHE BOOL "Build SFML Audio module" FORCE)
 
 FetchContent_MakeAvailable(SFML)
 
