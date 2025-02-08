@@ -7,8 +7,7 @@
 #include <vector>
 #include <random>
 
-
-void FakeCat::createCurrentDocs(int levelNr)
+void FakeCat::createCurrentDocs(const int levelNr)
 {
     makeDoc(levelNr);
 
@@ -17,11 +16,16 @@ void FakeCat::createCurrentDocs(int levelNr)
         FalsifierFactory factory;
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dist(0, m_documente.size() - 1);
+
+        //last document has a higher chance of being falsified(60%)
+        std::vector weights(m_documente.size(), 0.4 / (m_documente.size() - 1));
+        weights.back() = 0.6;
+
+        std::discrete_distribution<> dist(weights.begin(), weights.end());
 
         auto randomDoc = m_documente[dist(gen)];
 
-        if (auto falsifier = factory.getFalsifier(randomDoc))
+        if (const auto falsifier = factory.getFalsifier(randomDoc))
         {
             falsifier->falsify(randomDoc);
         }
@@ -32,7 +36,7 @@ void FakeCat::createCurrentDocs(int levelNr)
     }
     else
     {
-        throw missingDoc ("No documents available to falsify.\n");
+        throw missingDoc("No documents available to falsify.\n");
     }
     for (const auto& doc : m_documente)
     {
@@ -44,5 +48,3 @@ bool FakeCat::IsDocValid() const
 {
     return false;
 }
-
-

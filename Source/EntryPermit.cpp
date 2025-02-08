@@ -27,7 +27,7 @@ void EntryPermit::create_document()
     duration = durationDist(gen);
 
 
-    if (!m_sealTexture.loadFromFile("Img/setSeals1.png  "))
+    if (!m_sealTexture.loadFromFile("Img/setSeals1.png"))
     {
         throw missingTexture("Texture not found!\n");
     }

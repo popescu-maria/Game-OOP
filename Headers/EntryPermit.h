@@ -22,6 +22,6 @@ public:
 
     std::shared_ptr<DocFalsifier> getFalsifier() const override
     {
-        return std::make_shared<PasaportFalsifier>();
+        return std::make_shared<PermitFalsifier>();
     }
 };

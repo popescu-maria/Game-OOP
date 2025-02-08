@@ -12,7 +12,7 @@
 
 Game::Game()
     : m_window(sf::VideoMode(1200, 900), "Cats apocalypse"),
-      m_current_cat(m_window, "Img/CatShadow.png", 2)
+        m_current_cat(m_window, "Img/CatShadow.png", 2)
       , m_context(std::make_unique<OpenStampRack>()), m_RBcontext(std::make_unique<ClosedRB>("Img/RuleBook.png"))
 //,m_progressBar(50.f, 850.f, 1100.f, 20.f, m_levelTimeLimit)
 {
@@ -22,6 +22,7 @@ Game::Game()
 
 void Game::SetUp()
 {
+    loadBackground();
     m_window.setFramerateLimit(60);
 
     if (!m_meowBuffer.loadFromFile("Sounds/catSound.wav"))
@@ -234,28 +235,35 @@ void Game::drawGameOver()
                                .setSize(60)
                                .setCol(sf::Color::Red)
                                .build();
+    Text restartText = builder.setString("Press enter to play again!")
+                             .setSize(40)
+                             .setCol(sf::Color::Green)
+                             .build();
 
     const sf::Vector2u windowSize = m_window.getSize();
 
     const sf::FloatRect pointsBounds = totalPointsText.getText().getGlobalBounds();
     const sf::FloatRect catsBounds = totalCatsCheckedText.getText().getGlobalBounds();
     const sf::FloatRect gameOverBounds = gameOverText.getText().getGlobalBounds();
+    const sf::FloatRect restartBounds = restartText.getText().getGlobalBounds();
 
     const float centerX = static_cast<float>(windowSize.x) / 2.0f;
 
     totalPointsText.getText().setPosition(centerX - pointsBounds.width / 2.0f, windowSize.y / 3.0f);
     totalCatsCheckedText.getText().setPosition(centerX - catsBounds.width / 2.0f, windowSize.y / 2.5f);
     gameOverText.getText().setPosition(centerX - gameOverBounds.width / 2.0f, windowSize.y / 2.0f);
+    restartText.getText().setPosition(centerX - restartBounds.width / 2.0f, windowSize.y / 1.5f);
 
     m_window.draw(totalPointsText.getText());
     m_window.draw(totalCatsCheckedText.getText());
     m_window.draw(gameOverText.getText());
+    m_window.draw(restartText.getText());
 }
 
 
 void Game::draw()
 {
-    loadBackground();
+    m_window.clear();
     m_window.draw(m_backgroundSprite);
 
     if (m_current_cat.getCurrentCat())
@@ -271,6 +279,19 @@ void Game::draw()
     //m_progressBar.draw(m_window);
 }
 
+void Game::restartGame()
+{
+    m_pisiciCorecte = 0;
+    m_current_cat.replaceCat(m_window, "Img/CatShadow.png", 2);
+    CatManager::resetCatsCount();
+    docsChecked = false;
+    introDisplayed = false;
+    m_currentDocs.clear();
+    m_context.TransitionTo(std::make_unique<OpenStampRack>());
+    m_RBcontext.TransitionTo(std::make_unique<ClosedRB>("Img/RuleBook.png"));
+    SetUp();
+}
+
 void Game::Play()
 {
     sf::Clock clock;
@@ -284,7 +305,7 @@ void Game::Play()
             if (event.type == sf::Event::Closed)
                 m_window.close();
 
-            LevelProgress::handleGameState(GameState, event);
+            LevelProgress::handleGameState(GameState, event, [this]() { restartGame(); });
 
             if (GameState == NIVEL_1 || GameState == NIVEL_2 || GameState == NIVEL_3)
             {

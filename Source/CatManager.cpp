@@ -28,7 +28,6 @@ void CatManager::createNewCat(sf::RenderWindow& window, const std::string& fileN
         m_currentCat = std::make_shared<FakeCat>(window, fileName);
 
     m_currentCat->createCurrentDocs(nivelNr);
-
 }
 
 CatManager::CatManager(sf::RenderWindow& window, const std::string& fileName, int nivelNr)
@@ -53,4 +52,9 @@ void CatManager::increaseCatsCount()
 int CatManager::getCatsCount()
 {
     return m_CatsCount;
+}
+
+void CatManager::resetCatsCount()
+{
+    m_CatsCount = 0;
 }

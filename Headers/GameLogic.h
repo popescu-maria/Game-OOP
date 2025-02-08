@@ -56,6 +56,7 @@ class Game : public Singleton<Game>
     void drawNivelEnd();
     void drawGameOver();
     void draw();
+    void restartGame();
 
 public:
     void Play();

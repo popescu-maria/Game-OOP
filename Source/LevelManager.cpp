@@ -3,7 +3,7 @@
 #include "../Headers/ID.h"
 #include "../Headers/EntryPermit.h"
 
-void LevelProgress::handleGameState(int& gameState, const sf::Event& event)
+void LevelProgress::handleGameState(int& gameState, const sf::Event& event, const std::function<void()>& restartGame)
 {
     switch (gameState)
     {
@@ -19,6 +19,13 @@ void LevelProgress::handleGameState(int& gameState, const sf::Event& event)
     case NIVEL_2_END:
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
             gameState = NIVEL_3;
+        break;
+    case GAME_OVER:
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter)
+        {
+            gameState = INTRO;
+            restartGame();
+        }
         break;
 
     default: break;

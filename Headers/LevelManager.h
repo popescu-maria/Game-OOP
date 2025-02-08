@@ -25,7 +25,7 @@ class LevelProgress : public Singleton<LevelProgress>
     LevelProgress() = default;
 
 public:
-    static void handleGameState(int& gameState, const sf::Event& event);
+    static void handleGameState(int& gameState, const sf::Event& event, const std::function<void()>& restartGame);
     static void handleCatDocuments(int levelNr, std::vector<std::shared_ptr<Documente>>& documents,
                                    const std::string& name, int age, char gender, float height, float weight);
     static void handleLevelLogic(int& gameState, sf::RenderWindow& window, sf::Clock& clock, sf::Time& elapsedTime,

@@ -18,5 +18,5 @@ public:
     void replaceCat(sf::RenderWindow& window, const std::string& fileName, int nivelNr);
     static void increaseCatsCount();
     static int getCatsCount();
-
+    static void resetCatsCount();
 };
